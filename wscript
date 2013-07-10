@@ -13,6 +13,9 @@ def recurse_helper(ctx, name):
 
 def options(opt):
 
+    opt.load('wurf_tools')
+    opt.load('wurf_dependency_bundle')
+
     import waflib.extras.wurf_dependency_bundle as bundle
     import waflib.extras.wurf_dependency_resolve as resolve
     import waflib.extras.wurf_configure_output
@@ -59,16 +62,9 @@ def options(opt):
              git_repository = 'github.com/steinwurf/kodo.git',
              major_version = 11))
 
-    opt.load('wurf_dependency_bundle')
-    opt.load('wurf_dependency_resolve')
-    opt.load('wurf_tools')
-
-    #opt.load('compiler_c')
 
 def configure(conf):
-
-    #conf.load('compiler_c')
-
+    
     if conf.is_toplevel():
 
         conf.load('wurf_dependency_bundle')
@@ -109,3 +105,9 @@ def build(bld):
         bld.recurse('test')
         bld.recurse('examples/encode_decode_simple')
 
+def dist(ctx):
+    excludes = 'build **/.git **/.gitignore **/*~ **/*.pyc .lock* *.bat ' \
+               'waf-* .waf-* *.zip bundle_dependencies/*/master/*'
+    ctx.base_name = APPNAME+'-standalone-'+VERSION 
+    ctx.algo      = 'zip'    
+    ctx.files     = ctx.path.ant_glob('**/*', dir = True, excl = excludes.split(' '))

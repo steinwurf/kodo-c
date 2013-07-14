@@ -101,9 +101,18 @@ def build(bld):
                   export_includes = 'src',
                   use    = ['kodo_includes', 'boost_includes',
                             'fifi_includes', 'sak_includes'])
+                            
+        bld.shlib(source = 'src/ckodo/ckodo.cpp',
+                  target = 'ckodo',
+                  name   = 'ckodo_shared',
+                  install_path = None,
+                  export_includes = 'src',
+                  use    = ['kodo_includes', 'boost_includes',
+                            'fifi_includes', 'sak_includes'])
 
         bld.recurse('test')
         bld.recurse('examples/encode_decode_simple')
+
 
 def dist(ctx):
     excludes = 'build **/.git **/.gitignore **/*~ **/*.pyc .lock* *.bat ' \

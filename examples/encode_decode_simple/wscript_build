@@ -1,17 +1,23 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
+static_libs = []
+search_path = []
+
 if bld.is_mkspec_platform('windows'):
-
-    bld.program(features = 'c',
-                source   = 'encode_decode_simple.c',
-                target   = 'encode_decode_simple_static',
-                use      = ['ckodo_static'])
+    static_libs = []
 else:
+    static_libs = ['stdc++']
+    search_path = ['.']
 
-    bld.program(features = 'c',
-                source   = 'encode_decode_simple.c',
-                target   = 'encode_decode_simple_static',
-                lib      = ['stdc++'],
-                use      = ['ckodo_static'])
+bld.program(features = 'c',
+            source   = 'encode_decode_simple.c',
+            target   = 'encode_decode_simple_static',
+            lib      = static_libs,
+            use      = ['ckodo_static'])
 
+bld.program(features = 'c',
+            source   = 'encode_decode_simple.c',
+            target   = 'encode_decode_simple_shared',
+            rpath    = search_path,
+            use      = ['ckodo_shared'])

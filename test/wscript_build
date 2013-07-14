@@ -5,4 +5,4 @@ bld.program(
     features = 'cxx test',
     source   = ['kodo_c_bindings_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
     target   = 'kodo_c_bindings_tests',
-    use = ['ckodo_static', 'gtest'])
+    use      = ['ckodo_static', 'gtest'])

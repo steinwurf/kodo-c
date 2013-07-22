@@ -102,9 +102,15 @@ def build(bld):
                   use    = ['kodo_includes', 'boost_includes',
                             'fifi_includes', 'sak_includes'])
 
+        so_flags = []
+        mkspec = bld.get_tool_option('cxx_mkspec')
+        if 'crosslinux' in mkspec:
+            so_flags = ['-static-libgcc', '-static-libstdc++']
+
         bld.shlib(source = 'src/ckodo/ckodo.cpp',
                   target = 'ckodo',
                   name   = 'ckodo_shared',
+                  linkflags = so_flags,
                   install_path = None,
                   export_includes = 'src',
                   use    = ['kodo_includes', 'boost_includes',

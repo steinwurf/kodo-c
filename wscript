@@ -103,8 +103,8 @@ def build(bld):
                             'fifi_includes', 'sak_includes'])
 
         so_flags = []
-        mkspec = bld.get_tool_option('cxx_mkspec')
-        if 'crosslinux' in mkspec:
+        if bld.has_tool_option('cxx_mkspec') and \
+            'crosslinux' in bld.get_tool_option('cxx_mkspec'):
             so_flags = ['-static-libgcc', '-static-libstdc++']
 
         bld.shlib(source = 'src/ckodo/ckodo.cpp',

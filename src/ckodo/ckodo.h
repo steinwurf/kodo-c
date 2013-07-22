@@ -12,6 +12,11 @@ extern "C" {
 #include <string.h>
 #include <stdio.h>
 
+#ifdef __INTEL_COMPILER
+    #pragma byte_order (push, littleendian)
+    #pragma extern_prefix (push, "")
+#endif
+
 //------------------------------------------------------------------
 // FACTORY API
 //------------------------------------------------------------------
@@ -29,6 +34,7 @@ extern const size_t kodo_binary16;
 
 /// Constants for select in the encoder/decoder
 extern const size_t kodo_full_rlnc;
+extern const size_t kodo_on_the_fly;
 
 /// Builds a new encoder factory
 /// @param code_type This parameter determines the encoding algorithms used.
@@ -191,6 +197,14 @@ void kodo_set_symbol(kodo_coder_t* encoder, uint32_t index,
 /// @param size The size of the data to be copied
 void kodo_copy_symbols(kodo_coder_t* decoder, uint8_t* data, uint32_t size);
 
+/// @param coder Pointer to the encoder/decoder to check
+/// @return The size of a symbol in bytes
+uint32_t kodo_symbol_size(kodo_coder_t* coder);
+
+/// @param coder Pointer to the encoder/decoder to check
+/// @return The number of symbols in a encoder/decoder
+uint32_t kodo_symbols(kodo_coder_t* coder);
+
 //------------------------------------------------------------------
 // CODEC API
 //------------------------------------------------------------------
@@ -206,6 +220,11 @@ uint8_t kodo_is_complete(kodo_coder_t* decoder);
 /// @param coder Pointer to the coder to query
 /// @return the rank of the decoder or encoder
 uint32_t kodo_rank(kodo_coder_t* coder);
+
+#ifdef __INTEL_COMPILER
+    #pragma byte_order pop
+    #pragma extern_prefix pop
+#endif
 
 #ifdef __cplusplus
 }

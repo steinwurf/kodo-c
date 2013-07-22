@@ -62,16 +62,26 @@ namespace kodo
             return m_decoder->block_size();
         }
 
+        virtual uint32_t symbol_size() const
+        {
+            return m_decoder->symbol_size();
+        }
+
+        virtual uint32_t symbols() const
+        {
+            return m_decoder->symbols();
+        }
+
         virtual void copy_symbols(uint8_t* data, uint32_t size) const
         {
             auto storage = sak::mutable_storage(data, size);
             m_decoder->copy_symbols(storage);
         }
 
-
         typename KodoStack::pointer m_decoder;
 
     };
+
 }
 
 

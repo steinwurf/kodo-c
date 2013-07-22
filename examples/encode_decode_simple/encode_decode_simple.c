@@ -33,15 +33,22 @@ int main()
         kodo_new_decoder_factory(algorithm, finite_field,
                                  max_symbols, max_symbol_size);
 
+    // If we wanted to build an encoder of decoder with a smaller number of
+    // symbols or a different symbol size, then this can be adjusted using the
+    // following functions:
+    // kodo_factory_set_symbols(...) and kodo_factory_set_symbol_size(...)
+    // We can however not exceed the maximum values which was used when building
+    // the factory.
+
     kodo_coder_t* encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t* decoder = kodo_factory_new_decoder(decoder_factory);
 
     uint32_t payload_size = kodo_payload_size(encoder);
-    uint8_t *payload = (uint8_t*) malloc(payload_size);
+    uint8_t* payload = (uint8_t*) malloc(payload_size);
 
     uint32_t block_size = kodo_block_size(encoder);
-    uint8_t *data_in = (uint8_t*) malloc(block_size);
-    uint8_t *data_out = (uint8_t*) malloc(block_size);
+    uint8_t* data_in = (uint8_t*) malloc(block_size);
+    uint8_t* data_out = (uint8_t*) malloc(block_size);
 
     uint32_t i = 0;
     for(; i < block_size; ++i)
@@ -51,7 +58,10 @@ int main()
 
     while(!kodo_is_complete(decoder))
     {
-        kodo_encode(encoder, payload);
+        // The encoder will use a certain amount of bytes of the payload
+        // buffer. It will however never use more than payload_size, but
+        // it might use less.
+        uint32_t bytes_used = kodo_encode(encoder, payload);
         kodo_decode(decoder, payload);
     }
 
@@ -66,9 +76,9 @@ int main()
         printf("Unexpected failure to decode please file a bug report :)\n");
     }
 
-    free((void*)data_in);
-    free((void*)data_out);
-    free((void*)payload);
+    free(data_in);
+    free(data_out);
+    free(payload);
 
     kodo_delete_encoder(encoder);
     kodo_delete_decoder(decoder);

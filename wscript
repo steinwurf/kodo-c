@@ -118,3 +118,6 @@ def build(bld):
 
         bld.recurse('test')
         bld.recurse('examples/encode_decode_simple')
+        bld.recurse('examples/encode_decode_on_the_fly')
+
+

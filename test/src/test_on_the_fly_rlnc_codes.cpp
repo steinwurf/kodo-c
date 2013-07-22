@@ -9,8 +9,8 @@
 
 #include <ckodo/ckodo.h>
 
-void test_basic_api(uint32_t max_symbols, uint32_t max_symbol_size,
-                    size_t algorithm, size_t finite_field)
+void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
+                     size_t algorithm, size_t finite_field)
 {
     kodo_factory_t* encoder_factory =
         kodo_new_encoder_factory(algorithm, finite_field,
@@ -24,24 +24,35 @@ void test_basic_api(uint32_t max_symbols, uint32_t max_symbol_size,
     kodo_coder_t* decoder = kodo_factory_new_decoder(decoder_factory);
 
     uint32_t payload_size = kodo_payload_size(encoder);
-    uint8_t *payload = (uint8_t*) malloc(payload_size);
+    uint8_t* payload = (uint8_t*) malloc(payload_size);
 
     uint32_t block_size = kodo_block_size(encoder);
-    uint8_t *data_in = (uint8_t*) malloc(block_size);
+    uint8_t* data_in = (uint8_t*) malloc(block_size);
+    uint8_t* data_out = (uint8_t*) malloc(block_size);
 
     uint32_t i = 0;
-    for(; i < block_size; ++i)
+    for (; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
-    kodo_set_symbols(encoder, data_in, block_size);
-
-    while(!kodo_is_complete(decoder))
+    while (!kodo_is_complete(decoder))
     {
+        EXPECT_TRUE(kodo_rank(encoder) >= kodo_rank(decoder));
+
         kodo_encode(encoder, payload);
         kodo_decode(decoder, payload);
+
+        if ((rand() % 2) && kodo_rank(encoder) < kodo_symbols(encoder))
+        {
+            // The rank of an encoder indicates how many symbols have been added,
+            // i.e. how many symbols are available for encoding
+            uint32_t rank = kodo_rank(encoder);
+
+            // Calculate the offset to the next symbol to insert
+            uint8_t* symbol = data_in + (rank * kodo_symbol_size(encoder));
+            kodo_set_symbol(encoder, rank, symbol, kodo_symbol_size(encoder));
+        }
     }
 
-    uint8_t *data_out = (uint8_t*) malloc(block_size);
     kodo_copy_symbols(decoder, data_out, block_size);
 
     EXPECT_EQ(memcmp(data_in, data_out, block_size), 0);
@@ -58,11 +69,13 @@ void test_basic_api(uint32_t max_symbols, uint32_t max_symbol_size,
 }
 
 
-TEST(TestBindings, invoke_api)
+TEST(TestOnTheFlyRlncCodes, invoke_api)
 {
-    test_basic_api(42, 160, kodo_full_rlnc, kodo_binary);
-    test_basic_api(42, 160, kodo_full_rlnc, kodo_binary8);
-    test_basic_api(42, 160, kodo_full_rlnc, kodo_binary16);
+    test_on_the_fly(42, 160, kodo_on_the_fly, kodo_binary);
+    test_on_the_fly(42, 160, kodo_on_the_fly, kodo_binary8);
+    test_on_the_fly(42, 160, kodo_on_the_fly, kodo_binary16);
 }
+
+
 
 

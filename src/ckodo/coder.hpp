@@ -11,6 +11,8 @@ namespace kodo
     {
         virtual uint32_t payload_size() const = 0;
         virtual uint32_t block_size() const = 0;
+        virtual uint32_t symbol_size() const = 0;
+        virtual uint32_t symbols() const = 0;
         virtual uint32_t rank() const = 0;
 
         virtual ~coder(){}

@@ -113,21 +113,21 @@ int main()
                     uint8_t* original = data_in + i * size;
                     uint8_t* target = data_out + i * size;
 
-                    // Update that this symbol now has been decoded,
-                    // in a real application we could copy out the symbol
-                    // using the kodo_copy_symbol(..)
+                    // Update that this symbol now has been decoded
                     printf("Symbol %d was decoded\n", i);
                     decoded[i] = 1;
                     // Verify the decoded symbol
 
+                    // Copy out the individual symbol from the decoder
                     kodo_copy_symbol(decoder, i, target, size);
+                    // Verify the symbol against the original data
                     if (memcmp(original, target, size) == 0)
                     {
                         printf("Symbol %d decoded correctly\n", i);
                     }
                     else
                     {
-                        printf("  SYMBOL %d DECODING FAILED\n", i);
+                        printf("SYMBOL %d DECODING FAILED.\n", i);
                     }
                 }
             }

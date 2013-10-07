@@ -23,6 +23,7 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
     kodo_coder_t* encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t* decoder = kodo_factory_new_decoder(decoder_factory);
 
+    uint32_t symbol_size = kodo_symbol_size(encoder);
     uint32_t payload_size = kodo_payload_size(encoder);
     uint8_t* payload = (uint8_t*) malloc(payload_size);
 
@@ -38,9 +39,8 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
     {
         EXPECT_TRUE(kodo_rank(encoder) >= kodo_rank(decoder));
 
-        kodo_encode(encoder, payload);
-        kodo_decode(decoder, payload);
-
+        // Randomly choose to add a new symbol (with 50% probability)
+        // if the encoder rank is less than the maximum number of symbols
         if ((rand() % 2) && kodo_rank(encoder) < kodo_symbols(encoder))
         {
             // The rank of an encoder indicates how many symbols have been added,
@@ -48,8 +48,40 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
             uint32_t rank = kodo_rank(encoder);
 
             // Calculate the offset to the next symbol to insert
-            uint8_t* symbol = data_in + (rank * kodo_symbol_size(encoder));
-            kodo_set_symbol(encoder, rank, symbol, kodo_symbol_size(encoder));
+            uint8_t* symbol = data_in + (rank * symbol_size);
+            kodo_set_symbol(encoder, rank, symbol, symbol_size);
+        }
+        // Generate an encoded packet
+        kodo_encode(encoder, payload);
+
+        // Simulate that 50% of the packets are lost
+        if (rand() % 2) continue;
+
+        // Packet got through - pass that packet to the decoder
+        kodo_decode(decoder, payload);
+
+        // Check the decoder whether it is partially complete
+        // For on-the-fly decoding the decoder has to support the partial
+        // decoding tracker.
+
+        if (kodo_has_partial_decoding_tracker(decoder) &&
+            kodo_is_partial_complete(decoder))
+        {
+            uint32_t i = 0;
+            for (; i < kodo_symbols(decoder); ++i)
+            {
+                // Go through all symbols that are already decoded
+                if (kodo_is_symbol_decoded(decoder, i))
+                {
+                    uint8_t* original = data_in + i * symbol_size;
+                    uint8_t* target = data_out + i * symbol_size;
+
+                    // Copy the decoded symbol and verify it against the
+                    // original data
+                    kodo_copy_symbol(decoder, i, target, symbol_size);
+                    EXPECT_EQ(memcmp(original, target, symbol_size), 0);
+                }
+            }
         }
     }
 
@@ -69,13 +101,18 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
 }
 
 
-TEST(TestOnTheFlyRlncCodes, invoke_api)
+TEST(TestOnTheFlyRlncCodes, invoke_api_32)
 {
-    test_on_the_fly(42, 160, kodo_on_the_fly, kodo_binary);
-    test_on_the_fly(42, 160, kodo_on_the_fly, kodo_binary8);
-    test_on_the_fly(42, 160, kodo_on_the_fly, kodo_binary16);
+    uint32_t symbols = 32;
+    test_on_the_fly(symbols, 160, kodo_on_the_fly, kodo_binary);
+    test_on_the_fly(symbols, 160, kodo_on_the_fly, kodo_binary8);
+    test_on_the_fly(symbols, 160, kodo_on_the_fly, kodo_binary16);
 }
 
-
-
-
+TEST(TestOnTheFlyRlncCodes, invoke_api_128)
+{
+    uint32_t symbols = 128;
+    test_on_the_fly(symbols, 160, kodo_on_the_fly, kodo_binary);
+    test_on_the_fly(symbols, 160, kodo_on_the_fly, kodo_binary8);
+    test_on_the_fly(symbols, 160, kodo_on_the_fly, kodo_binary16);
+}

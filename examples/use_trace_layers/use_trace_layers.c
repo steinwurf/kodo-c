@@ -45,12 +45,14 @@ int main()
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 kodo_trace_enabled);
+                                 kodo_trace_enabled,
+                                 kodo_deep_storage);
 
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 kodo_trace_enabled);
+                                 kodo_trace_enabled,
+                                 kodo_deep_storage);
 
     // If we wanted to build an encoder or decoder with a smaller number of
     // symbols or a different symbol size, then this can be adjusted using the
@@ -92,7 +94,7 @@ int main()
         kodo_set_trace_callback(decoder, trace_callback, NULL);
     }
 
-    kodo_set_symbols(encoder, data_in, block_size);
+    kodo_set_const_symbols(encoder, data_in, block_size);
 
     while (!kodo_is_complete(decoder))
     {

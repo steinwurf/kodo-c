@@ -27,12 +27,14 @@ uint8_t run_kodo()
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 kodo_trace_enabled);
+                                 kodo_trace_enabled,
+                                 kodo_deep_storage);
 
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 kodo_trace_enabled);
+                                 kodo_trace_enabled,
+                                 kodo_deep_storage);
 
     // Create the coders
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
@@ -50,7 +52,7 @@ uint8_t run_kodo()
         data_in[i] = rand() % 256;
 
     // Set the date to encode
-    kodo_set_symbols(encoder, data_in, block_size);
+    kodo_set_const_symbols(encoder, data_in, block_size);
 
     // Run the decoding
     while (!kodo_is_complete(decoder))

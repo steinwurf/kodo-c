@@ -59,8 +59,7 @@ inline void test_combinations(
     {
         kodo_binary,
         kodo_binary4,
-        kodo_binary8,
-        kodo_binary16
+        kodo_binary8
     };
 
     for (auto& code : code_types)

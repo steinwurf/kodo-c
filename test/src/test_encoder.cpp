@@ -17,7 +17,8 @@ static void test_encoder(uint32_t symbols, uint32_t symbol_size,
                          int32_t trace)
 {
     kodo_factory_t encoder_factory = kodo_new_encoder_factory(
-        code_type, finite_field, symbols, symbol_size, trace);
+        code_type, finite_field, symbols, symbol_size, trace,
+        kodo_deep_storage);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
 

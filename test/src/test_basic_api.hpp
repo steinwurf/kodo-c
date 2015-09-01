@@ -13,36 +13,20 @@
 #include <kodoc/kodoc.h>
 
 inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
-                                 int32_t finite_field,
-                                 uint32_t symbols, uint32_t symbol_size,
-                                 bool shallow)
+    int32_t finite_field, uint32_t symbols, uint32_t symbol_size,
+    int32_t storage_mode)
 {
-    typedef kodo_factory_t (*coder_factory_function)(int32_t, int32_t, uint32_t,
-        uint32_t, int32_t);
-
-    coder_factory_function encoder_factory_function;
-    coder_factory_function decoder_factory_function;
-
-    if (shallow)
-    {
-        encoder_factory_function = &kodo_new_shallow_encoder_factory;
-        decoder_factory_function = &kodo_new_shallow_decoder_factory;
-    }
-    else // if deep
-    {
-        encoder_factory_function = &kodo_new_encoder_factory;
-        decoder_factory_function = &kodo_new_decoder_factory;
-    }
-
     kodo_factory_t encoder_factory =
-        encoder_factory_function(encoder_type, finite_field,
+        kodo_new_encoder_factory(encoder_type, finite_field,
                                          symbols, symbol_size,
-                                         kodo_trace_disabled);
+                                         kodo_trace_disabled,
+                                         storage_mode);
 
     kodo_factory_t decoder_factory =
-        decoder_factory_function(decoder_type, finite_field,
+        kodo_new_decoder_factory(decoder_type, finite_field,
                                          symbols, symbol_size,
-                                         kodo_trace_disabled);
+                                         kodo_trace_disabled,
+                                         storage_mode);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
@@ -69,8 +53,7 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
     EXPECT_EQ(kodo_factory_max_payload_size(encoder_factory),
               kodo_factory_max_payload_size(decoder_factory));
 
-    if (encoder_type == kodo_sparse_full_vector ||
-        encoder_type == kodo_sparse_seed)
+    if (encoder_type == kodo_sparse_full_vector)
     {
         // Set the coding vector density on the encoder
         kodo_set_density(encoder, 0.2);
@@ -85,7 +68,7 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
     uint8_t* data_in = NULL;
     uint8_t* data_out = NULL;
 
-    if (shallow)
+    if (storage_mode == kodo_shallow_storage)
     {
         // Allocate symbols in non-contiguous buffers
         input_symbols = (uint8_t**) malloc(symbols * sizeof(uint8_t*));
@@ -101,13 +84,13 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
                 input_symbols[i][j] = rand() % 256;
 
             // Store the symbol pointer in the encoder
-            kodo_set_symbol(encoder, i, input_symbols[i], symbol_size);
+            kodo_set_const_symbol(encoder, i, input_symbols[i], symbol_size);
 
             // Create the output symbol buffers for the decoder
             output_symbols[i] = (uint8_t*) malloc(symbol_size);
 
             // Specify the output buffers used for decoding
-            kodo_set_symbol(decoder, i, output_symbols[i], symbol_size);
+            kodo_set_mutable_symbol(decoder, i, output_symbols[i], symbol_size);
         }
     }
     else // if deep
@@ -119,7 +102,7 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
         for(uint32_t i = 0; i < block_size; ++i)
             data_in[i] = rand() % 256;
 
-        kodo_set_symbols(encoder, data_in, block_size);
+        kodo_set_const_symbols(encoder, data_in, block_size);
     }
 
     EXPECT_TRUE(kodo_is_complete(decoder) == 0);
@@ -132,7 +115,7 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
 
     EXPECT_TRUE(kodo_is_complete(decoder) != 0);
 
-    if (shallow)
+    if (storage_mode == kodo_shallow_storage)
     {
         assert(input_symbols);
         assert(output_symbols);
@@ -172,39 +155,35 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
 }
 
 inline void test_basic_api(int32_t encoder_type, int32_t decoder_type,
-                           uint32_t symbols, uint32_t symbol_size, bool shallow)
+                           uint32_t symbols, uint32_t symbol_size,
+                           int32_t storage_mode)
 {
     SCOPED_TRACE(testing::Message() << "symbols = " << symbols);
     SCOPED_TRACE(testing::Message() << "symbol_size = " << symbol_size);
     SCOPED_TRACE(testing::Message() << "storage type = "
-                                    << (shallow ? "shallow" : "deep"));
+                                    << (storage_mode == kodo_shallow_storage ?
+                                        "shallow" : "deep"));
     {
         SCOPED_TRACE(testing::Message() << "field = binary");
         run_test_basic_api(encoder_type, decoder_type, kodo_binary, symbols,
-            symbol_size, shallow);
+            symbol_size, storage_mode);
     }
 
     {
         SCOPED_TRACE(testing::Message() << "field = binary4");
         run_test_basic_api(encoder_type, decoder_type, kodo_binary4, symbols,
-            symbol_size, shallow);
+            symbol_size, storage_mode);
     }
 
     {
         SCOPED_TRACE(testing::Message() << "field = binary8");
         run_test_basic_api(encoder_type, decoder_type, kodo_binary8, symbols,
-            symbol_size, shallow);
-    }
-
-    {
-        SCOPED_TRACE(testing::Message() << "field = binary16");
-        run_test_basic_api(encoder_type, decoder_type, kodo_binary16, symbols,
-            symbol_size, shallow);
+            symbol_size, storage_mode);
     }
 }
 
 inline void test_basic_api(int32_t coder_type, uint32_t symbols,
-    uint32_t symbol_size, bool shallow)
+    uint32_t symbol_size, int32_t storage_mode)
 {
-    test_basic_api(coder_type, coder_type, symbols, symbol_size, shallow);
+    test_basic_api(coder_type, coder_type, symbols, symbol_size, storage_mode);
 }

@@ -38,12 +38,14 @@ int main()
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 kodo_trace_disabled);
+                                 kodo_trace_disabled,
+                                 kodo_deep_storage);
 
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 kodo_trace_disabled);
+                                 kodo_trace_disabled,
+                                 kodo_deep_storage);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
@@ -80,7 +82,8 @@ int main()
 
             // Calculate the offset to the next symbol to insert
             uint8_t* symbol = data_in + (rank * kodo_symbol_size(encoder));
-            kodo_set_symbol(encoder, rank, symbol, kodo_symbol_size(encoder));
+            kodo_set_const_symbol(encoder, rank, symbol,
+                kodo_symbol_size(encoder));
         }
 
         bytes_used = kodo_write_payload(encoder, payload);

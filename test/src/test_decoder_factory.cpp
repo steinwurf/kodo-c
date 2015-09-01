@@ -18,7 +18,8 @@ static void test_decoder_factory(uint32_t max_symbols, uint32_t max_symbol_size,
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
                                  max_symbols, max_symbol_size,
-                                 trace_enabled);
+                                 trace_enabled,
+                                 kodo_deep_storage);
 
     // Test the max_* properties
     EXPECT_EQ(max_symbols, kodo_factory_max_symbols(decoder_factory));

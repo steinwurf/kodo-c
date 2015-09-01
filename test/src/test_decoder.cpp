@@ -19,7 +19,8 @@ static void test_decoder(uint32_t symbols, uint32_t symbol_size,
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
                                  symbols, symbol_size,
-                                 trace);
+                                 trace,
+                                 kodo_deep_storage);
 
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
 
@@ -28,7 +29,7 @@ static void test_decoder(uint32_t symbols, uint32_t symbol_size,
 
     // Decoder methods
     // Seed-based codecs do not provide write_payload, i.e. recoding
-    if (code_type == kodo_seed || code_type == kodo_sparse_seed)
+    if (code_type == kodo_seed)
     {
         EXPECT_TRUE(kodo_has_write_payload(decoder) == 0);
     }

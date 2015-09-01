@@ -5,7 +5,6 @@
 
 #include "kodoc.h"
 
-#include <cstring>
 #include <cstdint>
 #include <cassert>
 
@@ -15,8 +14,10 @@
 #include <kodo/rlnc/perpetual_decoder.hpp>
 #include <kodo/rlnc/fulcrum_combined_decoder.hpp>
 
+#include <kodo/api/api.hpp>
+#include <kodo/rlnc/api/fulcrum_interface.hpp>
+
 #include "create_factory_wrapper.hpp"
-#include "decoder_factory_wrapper.hpp"
 
 //------------------------------------------------------------------
 // DECODER FACTORY FOR DEEP STORAGE STACKS
@@ -32,68 +33,46 @@ kodo_new_decoder_factory(int32_t code_type, int32_t finite_field,
 
     kodo_factory_t factory = 0;
 
+    bool deep = true;
+
     if (code_type == kodo_full_vector)
     {
-        factory = create_factory_wrapper<
+        factory = create_decoder_factory<
             full_vector_decoder,
-            // kodo::api::build_interface,
-            kodo::api::const_storage_interface,
-            kodo::api::decoder_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::read_payload_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::storage_interface
-            >(finite_field, max_symbols, max_symbol_size, trace_mode);
+            kodo::api::write_payload_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode, deep);
     }
     else if (code_type == kodo_on_the_fly)
     {
-        factory = create_factory_wrapper<
+        factory = create_decoder_factory<
             on_the_fly_decoder,
-            kodo::api::const_storage_interface,
-            kodo::api::decoder_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::read_payload_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::storage_interface
-            >(finite_field, max_symbols, max_symbol_size, trace_mode);
+            kodo::api::partial_decoding_interface,
+            kodo::api::write_payload_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode, deep);
     }
     else if (code_type == kodo_sliding_window)
     {
-        factory = create_factory_wrapper<
+        factory = create_decoder_factory<
             sliding_window_decoder,
-            kodo::api::const_storage_interface,
-            kodo::api::decoder_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::read_payload_interface,
+            kodo::api::partial_decoding_interface,
             kodo::api::write_payload_interface,
-            kodo::api::feedback_size_interface,
-            kodo::api::write_feedback_interface,
-            kodo::api::storage_interface
-            >(finite_field, max_symbols, max_symbol_size, trace_mode);
+            kodo::api::read_feedback_interface,
+            kodo::api::feedback_size_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode, deep);
     }
     else if (code_type == kodo_perpetual)
     {
-        factory = create_factory_wrapper<
+        factory = create_decoder_factory<
             perpetual_decoder,
-            kodo::api::const_storage_interface,
-            kodo::api::decoder_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::read_payload_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::storage_interface
-            >(finite_field, max_symbols, max_symbol_size, trace_mode);
+            kodo::api::write_payload_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode, deep);
     }
     else if (code_type == kodo_fulcrum)
     {
-        factory = create_factory_wrapper<
+        factory = create_decoder_factory<
             fulcrum_combined_decoder,
-            kodo::api::const_storage_interface,
-            kodo::api::decoder_interface,
-            kodo::api::fulcrum_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::read_payload_interface,
-            kodo::api::storage_interface
-            >(finite_field, max_symbols, max_symbol_size, trace_mode);
+            kodo::rlnc::api::fulcrum_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode, deep);
     }
 
     // Unknown code type

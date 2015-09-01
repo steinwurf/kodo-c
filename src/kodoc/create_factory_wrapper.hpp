@@ -15,9 +15,10 @@
 #include <meta/typelist.hpp>
 
 #include <kodo/enable_trace.hpp>
+#include <kodo/api/api.hpp>
 
 
-template<template<class> class Wrapper, template<class, class> class Coder>
+template<template<class, class, class...> class Coder, class... Interfaces>
 kodo_factory_t
 create_factory_wrapper(int32_t finite_field, uint32_t max_symbols,
                        uint32_t max_symbol_size, int32_t trace_mode)
@@ -30,50 +31,78 @@ create_factory_wrapper(int32_t finite_field, uint32_t max_symbols,
     {
         if (finite_field == kodo_binary)
         {
-            factory = new Wrapper<Coder<fifi::binary, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
+            auto f = std::make_shared<
+                typename Coder<fifi::binary, meta::typelist<>, Interfaces...>::factory>(
+                    max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
         else if (finite_field == kodo_binary4)
         {
-            factory = new Wrapper<Coder<fifi::binary4, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
+            auto f = std::make_shared<
+                typename Coder<fifi::binary4, meta::typelist<>, Interfaces...>::factory>(
+                    max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
         else if (finite_field == kodo_binary8)
         {
-            factory = new Wrapper<Coder<fifi::binary8, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
+            auto f = std::make_shared<
+                typename Coder<fifi::binary8, meta::typelist<>, Interfaces...>::factory>(
+                    max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
         else if (finite_field == kodo_binary16)
         {
-            factory = new Wrapper<Coder<fifi::binary16, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
+            auto f = std::make_shared<
+                typename Coder<fifi::binary16, meta::typelist<>, Interfaces...>::factory>(
+                    max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
     }
     else
     {
         if (finite_field == kodo_binary)
         {
-            factory = new Wrapper<Coder<fifi::binary,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
+            auto f = std::make_shared<typename Coder<
+                fifi::binary,
+                meta::typelist<kodo::enable_trace>,
+                kodo::api::trace_interface,
+                Interfaces...>::factory>(max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
         else if (finite_field == kodo_binary4)
         {
-            factory = new Wrapper<Coder<fifi::binary4,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
+            auto f = std::make_shared<typename Coder<
+                fifi::binary4,
+                meta::typelist<kodo::enable_trace>,
+                kodo::api::trace_interface,
+                Interfaces...>::factory>(max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
         else if (finite_field == kodo_binary8)
         {
-            factory = new Wrapper<Coder<fifi::binary8,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
+            auto f = std::make_shared<typename Coder<
+                fifi::binary8,
+                meta::typelist<kodo::enable_trace>,
+                kodo::api::trace_interface,
+                Interfaces...>::factory>(max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
         else if (finite_field == kodo_binary16)
         {
-            factory = new Wrapper<Coder<fifi::binary16,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
+            auto f = std::make_shared<typename Coder<
+                fifi::binary16,
+                meta::typelist<kodo::enable_trace>,
+                kodo::api::trace_interface,
+                Interfaces...>::factory>(max_symbols, max_symbol_size);
+
+            factory = (kodo_factory*)f->keep_alive();
         }
     }
 

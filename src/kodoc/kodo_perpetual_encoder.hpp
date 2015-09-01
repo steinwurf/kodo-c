@@ -22,7 +22,7 @@ extern "C"
         virtual void set_pre_charging(bool pre_charging) = 0;
         virtual uint32_t width() const = 0;
         virtual void set_width(uint32_t width) = 0;
-        virtual double width_ratio() = 0;
+        virtual double width_ratio() const = 0;
         virtual void set_width_ratio(double width_ratio) = 0;
     };
 }

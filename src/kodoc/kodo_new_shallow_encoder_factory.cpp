@@ -34,26 +34,52 @@ kodo_new_shallow_encoder_factory(int32_t code_type, int32_t finite_field,
     if (code_type == kodo_full_vector)
     {
         factory = create_factory_wrapper<
-            encoder_factory_wrapper, shallow_full_vector_encoder>(
-                finite_field, max_symbols, max_symbol_size, trace_mode);
+            shallow_full_vector_encoder,
+            kodo::api::const_storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::systematic_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::storage_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode);
     }
     else if (code_type == kodo_sparse_full_vector)
     {
         factory = create_factory_wrapper<
-            sparse_encoder_factory_wrapper, shallow_sparse_full_vector_encoder>(
-                finite_field, max_symbols, max_symbol_size, trace_mode);
+            shallow_sparse_full_vector_encoder,
+            kodo::api::const_storage_interface,
+            kodo::api::sparse_encoder_interface,
+            kodo::api::encoder_interface,
+            kodo::api::systematic_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::storage_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode);
     }
     else if (code_type == kodo_seed)
     {
         factory = create_factory_wrapper<
-            encoder_factory_wrapper, shallow_seed_encoder>(
-                finite_field, max_symbols, max_symbol_size, trace_mode);
+            shallow_seed_encoder,
+            kodo::api::const_storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::systematic_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::storage_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode);
     }
     else if (code_type == kodo_sparse_seed)
     {
         factory = create_factory_wrapper<
-            sparse_encoder_factory_wrapper, shallow_sparse_seed_encoder>(
-                finite_field, max_symbols, max_symbol_size, trace_mode);
+            shallow_sparse_seed_encoder,
+            kodo::api::const_storage_interface,
+            kodo::api::sparse_encoder_interface,
+            kodo::api::encoder_interface,
+            kodo::api::systematic_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::storage_interface
+            >(finite_field, max_symbols, max_symbol_size, trace_mode);
     }
 
     // Unknown code type

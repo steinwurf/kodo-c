@@ -14,6 +14,7 @@
 #include "kodo_factory.hpp"
 #include "kodo_sparse_encoder.hpp"
 #include "kodo_perpetual_encoder.hpp"
+#include <kodo/api/api.hpp>
 
 //------------------------------------------------------------------
 // FACTORY API
@@ -21,50 +22,66 @@
 
 void kodo_delete_encoder_factory(kodo_factory_t factory)
 {
-    assert(factory);
-    delete factory;
+    using interface = kodo::api::final_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    api->reset();
 }
 
 void kodo_delete_decoder_factory(kodo_factory_t factory)
 {
-    assert(factory);
-    delete factory;
+    using interface = kodo::api::final_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    api->reset();
 }
 
 uint32_t kodo_factory_max_symbols(kodo_factory_t factory)
 {
-    assert(factory);
-    return factory->max_symbols();
+    using interface = kodo::api::storage_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    return api->max_symbols();
 }
 
 uint32_t kodo_factory_max_symbol_size(kodo_factory_t factory)
 {
-    assert(factory);
-    return factory->max_symbol_size();
+    using interface = kodo::api::storage_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    return api->max_symbol_size();
 }
 
 uint32_t kodo_factory_max_block_size(kodo_factory_t factory)
 {
-    assert(factory);
-    return factory->max_block_size();
+    using interface = kodo::api::storage_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    return api->max_block_size();
 }
 
 uint32_t kodo_factory_max_payload_size(kodo_factory_t factory)
 {
-    assert(factory);
-    return factory->max_payload_size();
+    using interface = kodo::api::payload_size_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    return api->max_payload_size();
 }
 
 void kodo_factory_set_symbols(kodo_factory_t factory, uint32_t symbols)
 {
-    assert(factory);
-    factory->set_symbols(symbols);
+    using interface = kodo::api::storage_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    api->set_symbols(symbols);
 }
 
 void kodo_factory_set_symbol_size(kodo_factory_t factory, uint32_t symbol_size)
 {
-    assert(factory);
-    factory->set_symbol_size(symbol_size);
+    using interface = kodo::api::storage_interface::config_interface;
+    auto api = dynamic_cast<interface*>(factory);
+    assert(api);
+    api->set_symbol_size(symbol_size);
 }
 
 kodo_coder_t kodo_factory_new_encoder(kodo_factory_t factory)

@@ -58,7 +58,7 @@ namespace kodo
             m_coder->set_width(width);
         }
 
-        virtual double width_ratio()
+        virtual double width_ratio() const
         {
             return m_coder->width_ratio();
         }

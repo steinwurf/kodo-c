@@ -71,7 +71,8 @@ typedef enum
     kodo_sparse_full_vector,
     kodo_seed,
     kodo_sparse_seed,
-    kodo_perpetual
+    kodo_perpetual,
+    kodo_fulcrum
 }
 kodo_code_type;
 

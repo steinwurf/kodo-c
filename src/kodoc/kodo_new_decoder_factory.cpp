@@ -14,6 +14,7 @@
 #include <kodo/rlnc/perpetual_decoder.hpp>
 #include <kodo/rlnc/fulcrum_combined_decoder.hpp>
 #include <kodo/rlnc/seed_decoder.hpp>
+#include <kodo/rlnc/sparse_seed_decoder.hpp>
 
 #include <kodo/api/api.hpp>
 #include <kodo/rlnc/api/fulcrum_interface.hpp>
@@ -36,51 +37,63 @@ kodo_new_decoder_factory(int32_t code_type, int32_t finite_field,
 
     if (code_type == kodo_full_vector)
     {
-        factory = create_decoder_factory<
+        factory = create_factory<
+            runtime::runtime_decoder<
             full_vector_decoder,
-            kodo::api::write_payload_interface>(
+            kodo::api::write_payload_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_on_the_fly)
     {
-        factory = create_decoder_factory<
+        factory = create_factory<
+            runtime::runtime_decoder<
             on_the_fly_decoder,
             kodo::api::partial_decoding_interface,
-            kodo::api::write_payload_interface>(
+            kodo::api::write_payload_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_sliding_window)
     {
-        factory = create_decoder_factory<
+        factory = create_factory<
+            runtime::runtime_decoder<
             sliding_window_decoder,
             kodo::api::partial_decoding_interface,
             kodo::api::write_payload_interface,
             kodo::api::write_feedback_interface,
-            kodo::api::feedback_size_interface>(
+            kodo::api::feedback_size_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_seed)
     {
-        factory = create_decoder_factory<seed_decoder>(
+        factory = create_factory<
+            runtime::runtime_decoder<seed_decoder>>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_sparse_seed)
+    {
+        factory = create_factory<
+            runtime::runtime_decoder<sparse_seed_decoder>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_perpetual)
     {
-        factory = create_decoder_factory<
-            perpetual_decoder,
-            kodo::api::write_payload_interface>(
+        factory = create_factory<
+            runtime::runtime_decoder<perpetual_decoder,
+            kodo::api::write_payload_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_fulcrum)
     {
-        factory = create_decoder_factory<
+        factory = create_factory<
+            runtime::runtime_decoder<
             fulcrum_combined_decoder,
-            kodo::rlnc::api::fulcrum_interface>(
+            kodo::rlnc::api::fulcrum_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }

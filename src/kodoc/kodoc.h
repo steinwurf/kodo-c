@@ -68,6 +68,7 @@ typedef enum
     kodo_sliding_window,
     kodo_sparse_full_vector,
     kodo_seed,
+    kodo_sparse_seed,
     kodo_perpetual,
     kodo_fulcrum
 }
@@ -83,7 +84,9 @@ typedef enum
 }
 kodo_trace_mode;
 
-/// todo add docs
+/// Enum specifying the available storage modes
+/// Note: the size of the enum type cannot be guaranteed, so the int32_t type
+/// is used in the API calls to pass the enum values
 typedef enum
 {
     kodo_deep_storage,

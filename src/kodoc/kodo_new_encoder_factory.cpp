@@ -15,6 +15,7 @@
 #include <kodo/rlnc/perpetual_encoder.hpp>
 #include <kodo/rlnc/fulcrum_encoder.hpp>
 #include <kodo/rlnc/seed_encoder.hpp>
+#include <kodo/rlnc/sparse_seed_encoder.hpp>
 
 #include <kodo/api/api.hpp>
 #include <kodo/rlnc/api/perpetual_encoder_interface.hpp>
@@ -38,60 +39,76 @@ kodo_new_encoder_factory(int32_t code_type, int32_t finite_field,
 
     if (code_type == kodo_full_vector)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            kodo::runtime::runtime_encoder<
             full_vector_encoder,
-            kodo::api::systematic_interface>(
+            kodo::api::systematic_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_sparse_full_vector)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            runtime::runtime_encoder<
             sparse_full_vector_encoder,
             kodo::api::systematic_interface,
-            kodo::api::sparse_encoder_interface>(
+            kodo::api::sparse_encoder_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_on_the_fly)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            runtime::runtime_encoder<
             on_the_fly_encoder,
-            kodo::api::systematic_interface>(
+            kodo::api::systematic_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_sliding_window)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            runtime::runtime_encoder<
             sliding_window_encoder,
             kodo::api::systematic_interface,
             kodo::api::read_feedback_interface,
-            kodo::api::feedback_size_interface>(
+            kodo::api::feedback_size_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_seed)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            runtime::runtime_encoder<
             seed_encoder,
-            kodo::api::systematic_interface>(
+            kodo::api::systematic_interface>>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_sparse_seed)
+    {
+        factory = create_factory<
+            runtime::runtime_encoder<
+            sparse_seed_encoder,
+            kodo::api::systematic_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_perpetual)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            runtime::runtime_encoder<
             perpetual_encoder,
-            kodo::rlnc::api::perpetual_encoder_interface>(
+            kodo::rlnc::api::perpetual_encoder_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
     else if (code_type == kodo_fulcrum)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
+            runtime::runtime_encoder<
             fulcrum_encoder,
-            kodo::rlnc::api::fulcrum_interface>(
+            kodo::rlnc::api::fulcrum_interface>>(
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }

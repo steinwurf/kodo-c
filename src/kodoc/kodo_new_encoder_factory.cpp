@@ -39,7 +39,7 @@ kodo_new_encoder_factory(int32_t code_type, int32_t finite_field,
 
     if (code_type == kodo_full_vector)
     {
-        factory = create_factory<
+        factory = create_encoder_factory<
             full_vector_encoder,
             kodo::api::storage_interface,
             kodo::api::encoder_interface,
@@ -50,100 +50,100 @@ kodo_new_encoder_factory(int32_t code_type, int32_t finite_field,
                 finite_field, max_symbols, max_symbol_size, trace_mode,
                 storage_mode);
     }
-    // else if (code_type == kodo_sparse_full_vector)
-    // {
-    //     factory = create_factory<
-    //         sparse_full_vector_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::api::systematic_interface,
-    //         kodo::api::sparse_encoder_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
-    // else if (code_type == kodo_on_the_fly)
-    // {
-    //     factory = create_factory<
-    //         on_the_fly_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::api::systematic_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
-    // else if (code_type == kodo_sliding_window)
-    // {
-    //     factory = create_factory<
-    //         sliding_window_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::api::systematic_interface,
-    //         kodo::api::read_feedback_interface,
-    //         kodo::api::feedback_size_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
-    // else if (code_type == kodo_seed)
-    // {
-    //     factory = create_factory<
-    //         seed_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::api::systematic_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
-    // else if (code_type == kodo_sparse_seed)
-    // {
-    //     factory = create_factory<
-    //         sparse_seed_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::api::systematic_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
-    // else if (code_type == kodo_perpetual)
-    // {
-    //     factory = create_factory<
-    //         perpetual_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::rlnc::api::perpetual_encoder_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
-    // else if (code_type == kodo_fulcrum)
-    // {
-    //     factory = create_factory<
-    //         fulcrum_encoder,
-    //         kodo::api::storage_interface,
-    //         kodo::api::encoder_interface,
-    //         kodo::api::write_payload_interface,
-    //         kodo::api::payload_size_interface,
-    //         kodo::api::build_interface,
-    //         kodo::rlnc::api::fulcrum_interface>(
-    //             finite_field, max_symbols, max_symbol_size, trace_mode,
-    //             storage_mode);
-    // }
+    else if (code_type == kodo_sparse_full_vector)
+    {
+        factory = create_encoder_factory<
+            sparse_full_vector_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::api::systematic_interface,
+            kodo::api::sparse_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_on_the_fly)
+    {
+        factory = create_encoder_factory<
+            on_the_fly_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::api::systematic_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_sliding_window)
+    {
+        factory = create_encoder_factory<
+            sliding_window_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::api::systematic_interface,
+            kodo::api::read_feedback_interface,
+            kodo::api::feedback_size_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_seed)
+    {
+        factory = create_encoder_factory<
+            seed_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::api::systematic_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_sparse_seed)
+    {
+        factory = create_encoder_factory<
+            sparse_seed_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::api::systematic_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_perpetual)
+    {
+        factory = create_encoder_factory<
+            perpetual_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::rlnc::api::perpetual_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
+    else if (code_type == kodo_fulcrum)
+    {
+        factory = create_encoder_factory<
+            fulcrum_encoder,
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::build_interface,
+            kodo::rlnc::api::fulcrum_interface>(
+                finite_field, max_symbols, max_symbol_size, trace_mode,
+                storage_mode);
+    }
 
     // Unknown code type
     assert(factory);

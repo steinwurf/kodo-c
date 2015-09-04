@@ -74,26 +74,6 @@ typedef enum
 }
 kodo_code_type;
 
-/// Enum specifying the available trace modes
-/// Note: the size of the enum type cannot be guaranteed, so the int32_t type
-/// is used in the API calls to pass the enum values
-typedef enum
-{
-    kodo_trace_disabled,
-    kodo_trace_enabled
-}
-kodo_trace_mode;
-
-/// Enum specifying the available storage modes
-/// Note: the size of the enum type cannot be guaranteed, so the int32_t type
-/// is used in the API calls to pass the enum values
-typedef enum
-{
-    kodo_deep_storage,
-    kodo_shallow_storage
-}
-kodo_storage_mode;
-
 //------------------------------------------------------------------
 // FACTORY API
 //------------------------------------------------------------------
@@ -112,8 +92,7 @@ kodo_storage_mode;
 KODOC_API
 kodo_factory_t kodo_new_encoder_factory(
     int32_t code_type, int32_t finite_field,
-    uint32_t max_symbols, uint32_t max_symbol_size,
-    int32_t trace_mode, int32_t storage_mode);
+    uint32_t max_symbols, uint32_t max_symbol_size);
 
 /// Builds a new decoder factory (for deep storage decoders)
 /// @param code_type This parameter determines the decoding algorithms used.
@@ -129,8 +108,7 @@ kodo_factory_t kodo_new_encoder_factory(
 KODOC_API
 kodo_factory_t kodo_new_decoder_factory(
     int32_t code_type, int32_t finite_field,
-    uint32_t max_symbols, uint32_t max_symbol_size,
-    int32_t trace_mode, int32_t storage_mode);
+    uint32_t max_symbols, uint32_t max_symbol_size);
 
 /// Deallocates and releases the memory consumed by the encoder factory
 /// @param factory The encoder factory which should be deallocated

@@ -18,7 +18,7 @@
 
 template<class Runtime>
 kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
-    uint32_t max_symbol_size, int32_t trace_mode, int32_t storage_mode)
+    uint32_t max_symbol_size)
 {
     using namespace kodo;
 
@@ -31,17 +31,7 @@ kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
 
     auto r = Runtime();
 
-    if (storage_mode == kodo_shallow_storage)
-    {
-        r.set_shallow_storage();
-    }
-
     r.set_field(finite_field_map[finite_field]);
-
-    if (trace_mode)
-    {
-        r.enable_trace();
-    }
 
     auto f = r.build(max_symbols, max_symbol_size);
 

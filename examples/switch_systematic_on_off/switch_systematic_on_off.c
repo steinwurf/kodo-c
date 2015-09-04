@@ -37,15 +37,11 @@ int main()
     // The factories are used to build actual encoders/decoder
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_disabled,
-                                 kodo_deep_storage);
+                                 max_symbols, max_symbol_size);
 
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_disabled,
-                                 kodo_deep_storage);
+                                 max_symbols, max_symbol_size);
 
     // If we wanted to build an encoder or decoder with a smaller number of
     // symbols or a different symbol size, then this can be adjusted using the
@@ -76,6 +72,9 @@ int main()
     }
 
     kodo_set_const_symbols(encoder, data_in, block_size);
+
+    uint8_t* data_out = (uint8_t*) malloc(block_size);
+    kodo_set_mutable_symbols(decoder, data_out, block_size);
 
     printf("Starting encoding / decoding\n");
     while (!kodo_is_complete(decoder))
@@ -118,9 +117,6 @@ int main()
         // decoded
         printf("Symbols decoded %d\n", kodo_symbols_uncoded(decoder));
     }
-
-    uint8_t* data_out = (uint8_t*) malloc(kodo_block_size(decoder));
-    kodo_copy_from_symbols(decoder, data_out, kodo_block_size(decoder));
 
     if (memcmp(data_in, data_out, block_size) == 0)
     {

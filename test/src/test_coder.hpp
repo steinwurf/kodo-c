@@ -10,7 +10,7 @@
 #include <gtest/gtest.h>
 
 static void test_coder(kodo_coder_t coder, uint32_t symbols,
-    uint32_t symbol_size, int32_t code_type, int32_t trace)
+    uint32_t symbol_size, int32_t code_type)
 {
     EXPECT_EQ(symbols, kodo_symbols(coder));
     EXPECT_EQ(symbol_size, kodo_symbol_size(coder));
@@ -28,18 +28,9 @@ static void test_coder(kodo_coder_t coder, uint32_t symbols,
         EXPECT_GT(kodo_feedback_size(coder), 0U);
     }
 
-    if (trace == kodo_trace_disabled)
-    {
-        EXPECT_TRUE(kodo_has_set_trace_callback(coder) == 0);
-        EXPECT_TRUE(kodo_has_set_trace_stdout(coder) == 0);
-        EXPECT_TRUE(kodo_has_set_trace_off(coder) == 0);
-    }
-    else if (trace == kodo_trace_enabled)
-    {
-        EXPECT_TRUE(kodo_has_set_trace_callback(coder) != 0);
-        EXPECT_TRUE(kodo_has_set_trace_stdout(coder) != 0);
-        EXPECT_TRUE(kodo_has_set_trace_off(coder) != 0);
-        kodo_set_trace_stdout(coder);
-        kodo_set_trace_off(coder);
-    }
+    EXPECT_TRUE(kodo_has_set_trace_callback(coder) != 0);
+    EXPECT_TRUE(kodo_has_set_trace_stdout(coder) != 0);
+    EXPECT_TRUE(kodo_has_set_trace_off(coder) != 0);
+    kodo_set_trace_stdout(coder);
+    kodo_set_trace_off(coder);
 }

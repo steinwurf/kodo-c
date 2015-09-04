@@ -15,15 +15,5 @@ TEST(test_seed_codes, basic_api)
     uint32_t max_symbols = rand_symbols();
     uint32_t max_symbol_size = rand_symbol_size();
 
-    test_basic_api(kodo_seed, max_symbols, max_symbol_size,
-        kodo_deep_storage);
-}
-
-TEST(test_seed_codes, shallow_api)
-{
-    uint32_t max_symbols = rand_symbols();
-    uint32_t max_symbol_size = rand_symbol_size();
-
-    test_basic_api(kodo_seed, max_symbols, max_symbol_size,
-        kodo_shallow_storage);
+    test_basic_api(kodo_seed, max_symbols, max_symbol_size);
 }

@@ -27,10 +27,83 @@
 // ENCODER FACTORY FOR DEEP STORAGE STACKS
 //------------------------------------------------------------------
 
+namespace
+{
+    template<class... Interfaces>
+    struct interface_aggregator :
+        kodo::api::build_interface,
+        Interfaces...
+    {
+        struct config_interface :
+            kodo::api::build_interface::config_interface,
+            Interfaces::config_interface...
+        { };
+    };
+
+    using full_vector_encoder_interface = interface_aggregator<
+        kodo::api::const_storage_interface,
+        kodo::api::storage_interface,
+        kodo::api::encoder_interface,
+        kodo::api::write_payload_interface,
+        kodo::api::payload_size_interface,
+        kodo::api::systematic_interface>;
+
+    using sparse_full_vector_encoder_interface = interface_aggregator<
+            kodo::api::storage_interface,
+            kodo::api::encoder_interface,
+            kodo::api::write_payload_interface,
+            kodo::api::payload_size_interface,
+            kodo::api::systematic_interface,
+            kodo::api::sparse_encoder_interface>;
+
+    using on_the_fly_encoder_interface = interface_aggregator<
+                kodo::api::storage_interface,
+                kodo::api::encoder_interface,
+                kodo::api::write_payload_interface,
+                kodo::api::payload_size_interface,
+                kodo::api::systematic_interface>;
+
+    using sliding_window_encoder_interface = interface_aggregator<
+                kodo::api::storage_interface,
+                kodo::api::encoder_interface,
+                kodo::api::write_payload_interface,
+                kodo::api::payload_size_interface,
+                kodo::api::systematic_interface,
+                kodo::api::read_feedback_interface,
+                kodo::api::feedback_size_interface>;
+
+    using seed_encoder_interface = interface_aggregator<
+                kodo::api::storage_interface,
+                kodo::api::encoder_interface,
+                kodo::api::write_payload_interface,
+                kodo::api::payload_size_interface,
+                kodo::api::systematic_interface>;
+
+    using sparse_seed_encoder_interface = interface_aggregator<
+                kodo::api::storage_interface,
+                kodo::api::encoder_interface,
+                kodo::api::write_payload_interface,
+                kodo::api::payload_size_interface,
+                kodo::api::systematic_interface>;
+
+    using perpetual_encoder_interface = interface_aggregator<
+                kodo::api::storage_interface,
+                kodo::api::encoder_interface,
+                kodo::api::write_payload_interface,
+                kodo::api::payload_size_interface,
+                kodo::rlnc::api::perpetual_encoder_interface>;
+
+    using fulcrum_encoder_interface = interface_aggregator<
+                kodo::api::storage_interface,
+                kodo::api::encoder_interface,
+                kodo::api::write_payload_interface,
+                kodo::api::payload_size_interface,
+                kodo::rlnc::api::fulcrum_interface>;
+}
+
 kodo_factory_t
 kodo_new_encoder_factory(int32_t code_type, int32_t finite_field,
-                         uint32_t max_symbols, uint32_t max_symbol_size,
-                         int32_t trace_mode, int32_t storage_mode)
+                         uint32_t max_symbols, uint32_t max_symbol_size)
 {
     using namespace kodo;
     using namespace kodo::rlnc;
@@ -39,110 +112,67 @@ kodo_new_encoder_factory(int32_t code_type, int32_t finite_field,
 
     if (code_type == kodo_full_vector)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             full_vector_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::api::systematic_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            full_vector_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_sparse_full_vector)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             sparse_full_vector_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::api::systematic_interface,
-            kodo::api::sparse_encoder_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            sparse_full_vector_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_on_the_fly)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             on_the_fly_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::api::systematic_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            on_the_fly_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_sliding_window)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             sliding_window_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::api::systematic_interface,
-            kodo::api::read_feedback_interface,
-            kodo::api::feedback_size_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            sliding_window_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_seed)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             seed_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::api::systematic_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            seed_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_sparse_seed)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             sparse_seed_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::api::systematic_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            sparse_seed_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_perpetual)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             perpetual_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::rlnc::api::perpetual_encoder_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            perpetual_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
     else if (code_type == kodo_fulcrum)
     {
-        factory = create_encoder_factory<
+        factory = create_factory<
             fulcrum_encoder,
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::build_interface,
-            kodo::rlnc::api::fulcrum_interface>(
-                finite_field, max_symbols, max_symbol_size, trace_mode,
-                storage_mode);
+            meta::typelist<storage_type<tag::const_shallow_storage>>,
+            fulcrum_encoder_interface>(
+                finite_field, max_symbols, max_symbol_size);
     }
 
     // Unknown code type

@@ -15,16 +15,10 @@ void test_read_write_symbol(uint32_t symbols, uint32_t symbol_size,
                             int32_t code_type, int32_t finite_field)
 {
     kodo_factory_t encoder_factory =
-        kodo_new_encoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled,
-                                         kodo_shallow_storage);
+        kodo_new_encoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_factory_t decoder_factory =
-        kodo_new_decoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled,
-                                         kodo_shallow_storage);
+        kodo_new_decoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);

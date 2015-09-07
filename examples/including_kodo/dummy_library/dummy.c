@@ -26,15 +26,11 @@ uint8_t run_kodo()
     // Create the factories
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_enabled,
-                                 kodo_deep_storage);
+                                 max_symbols, max_symbol_size);
 
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_enabled,
-                                 kodo_deep_storage);
+                                 max_symbols, max_symbol_size);
 
     // Create the coders
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
@@ -54,16 +50,15 @@ uint8_t run_kodo()
     // Set the date to encode
     kodo_set_const_symbols(encoder, data_in, block_size);
 
+    uint8_t* data_out = (uint8_t*) malloc(block_size);
+    kodo_set_mutable_symbols(decoder, data_out, block_size);
+
     // Run the decoding
     while (!kodo_is_complete(decoder))
     {
         kodo_encode(encoder, payload);
         kodo_decode(decoder, payload);
     }
-
-    // Copy out the data
-    uint8_t* data_out = (uint8_t*) malloc(block_size);
-    kodo_copy_symbols(decoder, data_out, block_size);
 
     // Check if the decoding was successful
     uint8_t success = 0;

@@ -32,12 +32,10 @@ int main()
     int32_t finite_field = kodo_binary;
 
     kodo_factory_t encoder_factory = kodo_new_encoder_factory(
-        kodo_sparse_full_vector, finite_field, symbols, symbol_size,
-        kodo_trace_disabled, kodo_shallow_storage);
+        kodo_sparse_full_vector, finite_field, symbols, symbol_size);
 
     kodo_factory_t decoder_factory = kodo_new_decoder_factory(
-        kodo_full_vector, finite_field, symbols, symbol_size,
-        kodo_trace_disabled, kodo_shallow_storage);
+        kodo_full_vector, finite_field, symbols, symbol_size);
 
     // If we wanted to build an encoder of decoder with a smaller number of
     // symbols or a different symbol size, then this can be adjusted using the

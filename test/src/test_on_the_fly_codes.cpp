@@ -16,15 +16,11 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
 {
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_disabled,
-                                 kodo_deep_storage);
+                                 max_symbols, max_symbol_size);
 
     kodo_factory_t decoder_factory =
         kodo_new_decoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_disabled,
-                                 kodo_deep_storage);
+                                 max_symbols, max_symbol_size);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
@@ -39,6 +35,8 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
 
     for (uint32_t i = 0; i < block_size; ++i)
         data_in[i] = rand() % 256;
+
+    kodo_set_mutable_symbols(decoder, data_out, block_size);
 
     EXPECT_TRUE(kodo_is_complete(decoder) == 0);
 
@@ -90,16 +88,12 @@ void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
                     uint8_t* original = data_in + i * symbol_size;
                     uint8_t* target = data_out + i * symbol_size;
 
-                    // Copy the decoded symbol and verify it against the
-                    // original data
-                    kodo_copy_from_symbol(decoder, i, target, symbol_size);
+                    // verify the decoded symbol against the original data
                     EXPECT_EQ(memcmp(original, target, symbol_size), 0);
                 }
             }
         }
     }
-
-    kodo_copy_from_symbols(decoder, data_out, block_size);
 
     EXPECT_EQ(memcmp(data_in, data_out, block_size), 0);
 

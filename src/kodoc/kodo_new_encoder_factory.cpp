@@ -21,84 +21,64 @@
 #include <kodo/rlnc/api/perpetual_encoder_interface.hpp>
 #include <kodo/rlnc/api/fulcrum_interface.hpp>
 
-#include "create_factory_wrapper.hpp"
+#include "create_factory.hpp"
 
 //------------------------------------------------------------------
-// ENCODER FACTORY FOR DEEP STORAGE STACKS
+// ENCODER FACTORY
 //------------------------------------------------------------------
 
 namespace
 {
     template<class... Interfaces>
-    struct interface_aggregator :
+    struct encoder_interface_aggregator :
         kodo::api::build_interface,
+        kodo::api::trace_interface,
+        kodo::api::rank_interface,
+        kodo::api::storage_interface,
+        kodo::api::const_storage_interface,
+        kodo::api::encoder_interface,
+        kodo::api::write_payload_interface,
+        kodo::api::payload_size_interface,
         Interfaces...
     {
         struct config_interface :
             kodo::api::build_interface::config_interface,
+            kodo::api::trace_interface::config_interface,
+            kodo::api::rank_interface::config_interface,
+            kodo::api::storage_interface::config_interface,
+            kodo::api::const_storage_interface::config_interface,
+            kodo::api::encoder_interface::config_interface,
+            kodo::api::write_payload_interface::config_interface,
+            kodo::api::payload_size_interface::config_interface,
             Interfaces::config_interface...
         { };
     };
 
-    using full_vector_encoder_interface = interface_aggregator<
-        kodo::api::const_storage_interface,
-        kodo::api::storage_interface,
-        kodo::api::encoder_interface,
-        kodo::api::write_payload_interface,
-        kodo::api::payload_size_interface,
+    using systematic_encoder_interface = encoder_interface_aggregator<
         kodo::api::systematic_interface>;
 
-    using sparse_full_vector_encoder_interface = interface_aggregator<
-            kodo::api::storage_interface,
-            kodo::api::encoder_interface,
-            kodo::api::write_payload_interface,
-            kodo::api::payload_size_interface,
-            kodo::api::systematic_interface,
-            kodo::api::sparse_encoder_interface>;
+    using full_vector_encoder_interface = systematic_encoder_interface;
 
-    using on_the_fly_encoder_interface = interface_aggregator<
-                kodo::api::storage_interface,
-                kodo::api::encoder_interface,
-                kodo::api::write_payload_interface,
-                kodo::api::payload_size_interface,
-                kodo::api::systematic_interface>;
+    using sparse_full_vector_encoder_interface = encoder_interface_aggregator<
+        kodo::api::systematic_interface,
+        kodo::api::sparse_encoder_interface>;
 
-    using sliding_window_encoder_interface = interface_aggregator<
-                kodo::api::storage_interface,
-                kodo::api::encoder_interface,
-                kodo::api::write_payload_interface,
-                kodo::api::payload_size_interface,
-                kodo::api::systematic_interface,
-                kodo::api::read_feedback_interface,
-                kodo::api::feedback_size_interface>;
+    using on_the_fly_encoder_interface = systematic_encoder_interface;
 
-    using seed_encoder_interface = interface_aggregator<
-                kodo::api::storage_interface,
-                kodo::api::encoder_interface,
-                kodo::api::write_payload_interface,
-                kodo::api::payload_size_interface,
-                kodo::api::systematic_interface>;
+    using sliding_window_encoder_interface = encoder_interface_aggregator<
+        kodo::api::systematic_interface,
+        kodo::api::read_feedback_interface,
+        kodo::api::feedback_size_interface>;
 
-    using sparse_seed_encoder_interface = interface_aggregator<
-                kodo::api::storage_interface,
-                kodo::api::encoder_interface,
-                kodo::api::write_payload_interface,
-                kodo::api::payload_size_interface,
-                kodo::api::systematic_interface>;
+    using seed_encoder_interface = systematic_encoder_interface;
 
-    using perpetual_encoder_interface = interface_aggregator<
-                kodo::api::storage_interface,
-                kodo::api::encoder_interface,
-                kodo::api::write_payload_interface,
-                kodo::api::payload_size_interface,
-                kodo::rlnc::api::perpetual_encoder_interface>;
+    using sparse_seed_encoder_interface = systematic_encoder_interface;
 
-    using fulcrum_encoder_interface = interface_aggregator<
-                kodo::api::storage_interface,
-                kodo::api::encoder_interface,
-                kodo::api::write_payload_interface,
-                kodo::api::payload_size_interface,
-                kodo::rlnc::api::fulcrum_interface>;
+    using perpetual_encoder_interface = encoder_interface_aggregator<
+        kodo::rlnc::api::perpetual_encoder_interface>;
+
+    using fulcrum_encoder_interface = encoder_interface_aggregator<
+        kodo::rlnc::api::fulcrum_interface>;
 }
 
 kodo_factory_t

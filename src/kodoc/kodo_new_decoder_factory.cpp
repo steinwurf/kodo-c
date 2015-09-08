@@ -19,81 +19,60 @@
 #include <kodo/api/api.hpp>
 #include <kodo/rlnc/api/fulcrum_interface.hpp>
 
-#include "create_factory_wrapper.hpp"
+#include "create_factory.hpp"
 
 //------------------------------------------------------------------
-// DECODER FACTORY FOR DEEP STORAGE STACKS
+// DECODER FACTORY
 //------------------------------------------------------------------
 namespace
 {
     template<class... Interfaces>
-    struct interface_aggregator :
+    struct decoder_interface_aggregator :
         kodo::api::build_interface,
+        kodo::api::decoder_interface,
+        kodo::api::mutable_storage_interface,
+        kodo::api::payload_size_interface,
+        kodo::api::rank_interface,
+        kodo::api::read_payload_interface,
+        kodo::api::storage_interface,
+        kodo::api::trace_interface,
         Interfaces...
     {
         struct config_interface :
             kodo::api::build_interface::config_interface,
+            kodo::api::decoder_interface::config_interface,
+            kodo::api::mutable_storage_interface::config_interface,
+            kodo::api::payload_size_interface::config_interface,
+            kodo::api::rank_interface::config_interface,
+            kodo::api::read_payload_interface::config_interface,
+            kodo::api::storage_interface::config_interface,
+            kodo::api::trace_interface::config_interface,
             Interfaces::config_interface...
         { };
     };
 
-    using decoder_kodo_full_vector_interface = interface_aggregator<
-        kodo::api::decoder_interface,
-        kodo::api::mutable_storage_interface,
-        kodo::api::payload_size_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::storage_interface,
+    using decoder_kodo_full_vector_interface = decoder_interface_aggregator<
         kodo::api::write_payload_interface>;
 
-    using decoder_kodo_on_the_fly_interface = interface_aggregator<
-        kodo::api::decoder_interface,
-        kodo::api::mutable_storage_interface,
+    using decoder_kodo_on_the_fly_interface = decoder_interface_aggregator<
         kodo::api::partial_decoding_interface,
-        kodo::api::payload_size_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::storage_interface,
         kodo::api::write_payload_interface>;
 
-    using decoder_kodo_sliding_window_interface = interface_aggregator<
-        kodo::api::mutable_storage_interface,
+    using decoder_kodo_sliding_window_interface = decoder_interface_aggregator<
         kodo::api::partial_decoding_interface,
         kodo::api::write_payload_interface,
         kodo::api::write_feedback_interface,
-        kodo::api::feedback_size_interface,
-        kodo::api::storage_interface,
-        kodo::api::decoder_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::payload_size_interface>;
+        kodo::api::feedback_size_interface>;
 
-    using decoder_kodo_seed_interface = interface_aggregator<
-        kodo::api::mutable_storage_interface,
-        kodo::api::storage_interface,
-        kodo::api::decoder_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::payload_size_interface>;
+    using decoder_kodo_seed_interface = decoder_interface_aggregator<>;
 
-    using decoder_kodo_sparse_seed_interface = interface_aggregator<
-        kodo::api::mutable_storage_interface,
-        kodo::api::storage_interface,
-        kodo::api::decoder_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::payload_size_interface>;
+    using decoder_kodo_sparse_seed_interface = decoder_interface_aggregator<>;
 
-    using decoder_kodo_perpetual_interface = interface_aggregator<
-        kodo::api::mutable_storage_interface,
-        kodo::api::write_payload_interface,
-        kodo::api::storage_interface,
-        kodo::api::decoder_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::payload_size_interface>;
+    using decoder_kodo_perpetual_interface = decoder_interface_aggregator<
+        kodo::api::write_payload_interface>;
 
-    using decoder_kodo_fulcrum_interface = interface_aggregator<
-        kodo::api::mutable_storage_interface,
-        kodo::rlnc::api::fulcrum_interface,
-        kodo::api::storage_interface,
-        kodo::api::decoder_interface,
-        kodo::api::read_payload_interface,
-        kodo::api::payload_size_interface>;
+    using decoder_kodo_fulcrum_interface = decoder_interface_aggregator<
+        kodo::rlnc::api::fulcrum_interface>;
 }
 
 kodo_factory_t

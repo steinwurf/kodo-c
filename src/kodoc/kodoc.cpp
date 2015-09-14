@@ -24,8 +24,10 @@
 #include <kodo/rlnc/api/width.hpp>
 #include <kodo/rlnc/api/width_ratio.hpp>
 
-struct kodo_factory { };
-struct kodo_coder { };
+struct kodo_factory
+{ };
+struct kodo_coder
+{ };
 
 //------------------------------------------------------------------
 // FACTORY API

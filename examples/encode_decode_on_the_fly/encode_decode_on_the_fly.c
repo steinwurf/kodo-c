@@ -35,15 +35,11 @@ int main()
     // kodo_binary, kodo_binary8, kodo_binary16
     int32_t finite_field = kodo_binary8;
 
-    kodo_factory_t encoder_factory =
-        kodo_new_encoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_disabled);
+    kodo_factory_t encoder_factory = kodo_new_encoder_factory(code_type,
+        finite_field, max_symbols, max_symbol_size);
 
-    kodo_factory_t decoder_factory =
-        kodo_new_decoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 kodo_trace_disabled);
+    kodo_factory_t decoder_factory = kodo_new_decoder_factory(code_type,
+        finite_field, max_symbols, max_symbol_size);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
@@ -54,6 +50,8 @@ int main()
     uint32_t block_size = kodo_block_size(encoder);
     uint8_t* data_in = (uint8_t*)malloc(block_size);
     uint8_t* data_out = (uint8_t*)malloc(block_size);
+
+    kodo_set_mutable_symbols(decoder, data_out, block_size);
 
     // Keeps track of which symbols have been decoded
     uint8_t* decoded = (uint8_t*)malloc(sizeof(uint8_t)*max_symbols);
@@ -80,7 +78,8 @@ int main()
 
             // Calculate the offset to the next symbol to insert
             uint8_t* symbol = data_in + (rank * kodo_symbol_size(encoder));
-            kodo_set_symbol(encoder, rank, symbol, kodo_symbol_size(encoder));
+            kodo_set_const_symbol(encoder, rank, symbol,
+                kodo_symbol_size(encoder));
         }
 
         bytes_used = kodo_write_payload(encoder, payload);
@@ -125,10 +124,7 @@ int main()
                     // Update that this symbol now has been decoded
                     printf("Symbol %d was decoded\n", i);
                     decoded[i] = 1;
-                    // Verify the decoded symbol
 
-                    // Copy out the individual symbol from the decoder
-                    kodo_copy_from_symbol(decoder, i, target, size);
                     // Verify the symbol against the original data
                     if (memcmp(original, target, size) == 0)
                     {
@@ -142,8 +138,6 @@ int main()
             }
         }
     }
-
-    kodo_copy_from_symbols(decoder, data_out, block_size);
 
     if (memcmp(data_in, data_out, block_size) == 0)
     {

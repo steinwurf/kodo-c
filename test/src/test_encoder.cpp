@@ -13,16 +13,15 @@
 #include "test_coder.hpp"
 
 static void test_encoder(uint32_t symbols, uint32_t symbol_size,
-                         int32_t code_type, int32_t finite_field,
-                         int32_t trace)
+                         int32_t code_type, int32_t finite_field)
 {
     kodo_factory_t encoder_factory = kodo_new_encoder_factory(
-        code_type, finite_field, symbols, symbol_size, trace);
+        code_type, finite_field, symbols, symbol_size);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
 
     // Coder methods
-    test_coder(encoder, symbols, symbol_size, code_type, trace);
+    test_coder(encoder, symbols, symbol_size, code_type);
 
     // Encoder methods
     EXPECT_TRUE(kodo_has_write_payload(encoder) != 0);
@@ -45,11 +44,5 @@ TEST(test_encoder, invoke_api)
     uint32_t symbols = rand_symbols();
     uint32_t symbol_size = rand_symbol_size();
 
-    test_combinations(
-        test_encoder,
-        symbols, symbol_size, kodo_trace_disabled);
-
-    test_combinations(
-        test_encoder,
-        symbols, symbol_size, kodo_trace_enabled);
+    test_combinations(test_encoder, symbols, symbol_size);
 }

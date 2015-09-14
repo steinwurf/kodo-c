@@ -10,24 +10,10 @@
 #include "test_helper.hpp"
 #include "test_basic_api.hpp"
 
-TEST(test_seed_codes, shallow_api)
+TEST(test_seed_codes, basic_api)
 {
     uint32_t max_symbols = rand_symbols();
     uint32_t max_symbol_size = rand_symbol_size();
 
-    bool shallow_storage = true;
-
-    test_basic_api(kodo_seed, max_symbols, max_symbol_size, shallow_storage);
-}
-
-TEST(test_seed_codes, sparse_shallow_api)
-{
-    // Make sure that the decoding can complete with a lower density
-    uint32_t max_symbols = rand_symbols() + 10;
-    uint32_t max_symbol_size = rand_symbol_size();
-
-    bool shallow_storage = true;
-
-    test_basic_api(kodo_sparse_seed, kodo_sparse_seed, max_symbols,
-        max_symbol_size, shallow_storage);
+    test_basic_api(kodo_seed, max_symbols, max_symbol_size);
 }

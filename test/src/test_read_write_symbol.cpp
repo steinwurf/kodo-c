@@ -15,14 +15,10 @@ void test_read_write_symbol(uint32_t symbols, uint32_t symbol_size,
                             int32_t code_type, int32_t finite_field)
 {
     kodo_factory_t encoder_factory =
-        kodo_new_shallow_encoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled);
+        kodo_new_encoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_factory_t decoder_factory =
-        kodo_new_shallow_decoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled);
+        kodo_new_decoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
@@ -125,13 +121,13 @@ void test_read_write_symbol(uint32_t symbols, uint32_t symbol_size,
             input_symbols[i][j] = original_symbols[i];
 
         // Store the symbol pointer in the encoder
-        kodo_set_symbol(encoder, i, input_symbols[i], symbol_size);
+        kodo_set_const_symbol(encoder, i, input_symbols[i], symbol_size);
 
         // Create the output symbol buffers for the decoder
         output_symbols[i] = (uint8_t*) malloc(symbol_size);
 
         // Specify the output buffers used for decoding
-        kodo_set_symbol(decoder, i, output_symbols[i], symbol_size);
+        kodo_set_mutable_symbol(decoder, i, output_symbols[i], symbol_size);
     }
 
     EXPECT_TRUE(kodo_is_complete(decoder) == 0);

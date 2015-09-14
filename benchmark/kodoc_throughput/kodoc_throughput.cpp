@@ -48,14 +48,10 @@ bool run_coding_test(int32_t finite_field, uint32_t symbols,
     start = bc::high_resolution_clock::now();
 
     kodo_factory_t encoder_factory =
-        kodo_new_shallow_encoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled);
+        kodo_new_encoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_factory_t decoder_factory =
-        kodo_new_shallow_decoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled);
+        kodo_new_decoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_coder_t encoder = kodo_factory_new_encoder(encoder_factory);
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
@@ -95,8 +91,8 @@ bool run_coding_test(int32_t finite_field, uint32_t symbols,
         data_in[i] = rand() % 256;
 
     // Set the input and output symbol buffers
-    kodo_set_symbols(encoder, data_in, block_size);
-    kodo_set_symbols(decoder, data_out, block_size);
+    kodo_set_const_symbols(encoder, data_in, block_size);
+    kodo_set_mutable_symbols(decoder, data_out, block_size);
 
     // Start the encoding timer
     start = bc::high_resolution_clock::now();
@@ -166,8 +162,9 @@ int main(int argc, const char* argv[])
 {
     if (argc != 4)
     {
-        printf("Usage: %s [binary|binary4|binary8|binary16] "
-               "symbols symbol_size\n", argv[0]);
+        printf(
+            "Usage: %s [binary|binary4|binary8] "
+            "symbols symbol_size\n", argv[0]);
         return 1;
     }
 
@@ -184,10 +181,6 @@ int main(int argc, const char* argv[])
     else if (strcmp(argv[1], "binary8") == 0)
     {
         field = kodo_binary8;
-    }
-    else if (strcmp(argv[1], "binary16") == 0)
-    {
-        field = kodo_binary16;
     }
     else
     {

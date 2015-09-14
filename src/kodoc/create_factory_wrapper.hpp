@@ -9,76 +9,33 @@
 
 #include <cstdint>
 #include <cassert>
+#include <map>
+#include <string>
 
-#include <fifi/default_field.hpp>
+#include <kodo/api/api.hpp>
+#include <kodo/runtime/runtime_encoder.hpp>
+#include <kodo/runtime/runtime_decoder.hpp>
 
-#include <meta/typelist.hpp>
-
-#include <kodo/enable_trace.hpp>
-
-
-template<template<class> class Wrapper, template<class, class> class Coder>
-kodo_factory_t
-create_factory_wrapper(int32_t finite_field, uint32_t max_symbols,
-                       uint32_t max_symbol_size, int32_t trace_mode)
+template<class Runtime>
+kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
+    uint32_t max_symbol_size)
 {
     using namespace kodo;
 
-    kodo_factory_t factory = 0;
-
-    if (trace_mode == kodo_trace_disabled)
+    std::map<int32_t, std::string> finite_field_map =
     {
-        if (finite_field == kodo_binary)
-        {
-            factory = new Wrapper<Coder<fifi::binary, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
-        }
-        else if (finite_field == kodo_binary4)
-        {
-            factory = new Wrapper<Coder<fifi::binary4, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
-        }
-        else if (finite_field == kodo_binary8)
-        {
-            factory = new Wrapper<Coder<fifi::binary8, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
-        }
-        else if (finite_field == kodo_binary16)
-        {
-            factory = new Wrapper<Coder<fifi::binary16, meta::typelist<>>>(
-                max_symbols, max_symbol_size);
-        }
-    }
-    else
-    {
-        if (finite_field == kodo_binary)
-        {
-            factory = new Wrapper<Coder<fifi::binary,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
-        }
-        else if (finite_field == kodo_binary4)
-        {
-            factory = new Wrapper<Coder<fifi::binary4,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
-        }
-        else if (finite_field == kodo_binary8)
-        {
-            factory = new Wrapper<Coder<fifi::binary8,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
-        }
-        else if (finite_field == kodo_binary16)
-        {
-            factory = new Wrapper<Coder<fifi::binary16,
-                meta::typelist<kodo::enable_trace>>>(
-                    max_symbols, max_symbol_size);
-        }
-    }
+        {kodo_binary, "binary"},
+        {kodo_binary4, "binary4"},
+        {kodo_binary8, "binary8"}
+    };
 
-    // Unknown field type
-    assert(factory);
+    auto r = Runtime();
+
+    r.set_field(finite_field_map[finite_field]);
+
+    auto f = r.build(max_symbols, max_symbol_size);
+
+    kodo_factory_t factory = (kodo_factory_t)f->keep_alive();
 
     return factory;
 }

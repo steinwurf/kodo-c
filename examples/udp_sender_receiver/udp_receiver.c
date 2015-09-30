@@ -126,8 +126,7 @@ int main(int argc, char* argv[])
 
     // Create the encoder factory
     decoder_factory = kodo_new_decoder_factory(code_type, finite_field,
-                                               max_symbols, max_symbol_size,
-                                               kodo_trace_enabled);
+                                               max_symbols, max_symbol_size);
 
     kodo_factory_set_symbols(decoder_factory, symbols);
     decoder = kodo_factory_new_decoder(decoder_factory);
@@ -135,6 +134,10 @@ int main(int argc, char* argv[])
     // Create the buffer needed for the payload
     payload_size = kodo_payload_size(decoder);
     payload = (uint8_t*) malloc(payload_size);
+
+    uint32_t block_size = kodo_block_size(decoder);
+    uint8_t* data_out = (uint8_t*) malloc(block_size);
+    kodo_set_mutable_symbols(decoder, data_out, block_size);
 
     // Zero initialize the decoded array */
     memset(decoded, '\0', sizeof(uint8_t) * max_symbols);
@@ -181,7 +184,8 @@ int main(int argc, char* argv[])
                 {
                     // Update that this symbol now has been decoded,
                     // in a real application we could copy out the symbol
-                    // using the kodo_copy_from_symbol(..)
+                    // using the kodo_copy_from_symbol(..) or use the data_out
+                    // directly.
                     printf("Symbol %d was decoded\n", i);
                     decoded[i] = 1;
                 }

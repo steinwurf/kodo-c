@@ -36,14 +36,13 @@ inline uint32_t rand_symbol_size(uint32_t max_symbol_size = 1600)
 }
 
 using test_function = std::function<
-    void (uint32_t, uint32_t, int32_t, int32_t, int32_t)>;
+    void (uint32_t, uint32_t, int32_t, int32_t)>;
 
-inline void test_combinations(
-    test_function coder_test,
-    uint32_t max_symbols,
-    uint32_t max_symbol_size,
-    bool trace_enabled)
+inline void test_combinations(test_function coder_test, uint32_t max_symbols,
+    uint32_t max_symbol_size)
 {
+    ASSERT_TRUE(bool(coder_test));
+
     SCOPED_TRACE(testing::Message() << "symbols = " << max_symbols);
     SCOPED_TRACE(testing::Message() << "symbol_size = " << max_symbol_size);
 
@@ -59,19 +58,14 @@ inline void test_combinations(
     {
         kodo_binary,
         kodo_binary4,
-        kodo_binary8,
-        kodo_binary16
+        kodo_binary8
     };
 
     for (auto& code : code_types)
     {
         for (auto& field : fields)
         {
-            if (coder_test)
-            {
-                coder_test(max_symbols, max_symbol_size,
-                           code, field, trace_enabled);
-            }
+            coder_test(max_symbols, max_symbol_size, code, field);
         }
     }
 }

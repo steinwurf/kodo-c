@@ -12,13 +12,11 @@
 #include "test_helper.hpp"
 
 static void test_encoder_factory(uint32_t max_symbols, uint32_t max_symbol_size,
-                                 int32_t code_type, int32_t finite_field,
-                                 int32_t trace_enabled)
+                                 int32_t code_type, int32_t finite_field)
 {
     kodo_factory_t encoder_factory =
         kodo_new_encoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size,
-                                 trace_enabled);
+                                 max_symbols, max_symbol_size);
 
     // Test the max_* properties
     EXPECT_EQ(max_symbols, kodo_factory_max_symbols(encoder_factory));
@@ -64,7 +62,5 @@ TEST(test_encoder_factory, invoke_api)
     uint32_t max_symbols = rand_symbols() + 1;
     uint32_t max_symbol_size = rand_symbol_size() + 4;
 
-    test_combinations(
-        test_encoder_factory,
-        max_symbols, max_symbol_size, kodo_trace_disabled);
+    test_combinations(test_encoder_factory, max_symbols, max_symbol_size);
 }

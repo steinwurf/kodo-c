@@ -45,14 +45,10 @@ int main()
     int32_t finite_field = kodo_binary;
 
     kodo_factory_t encoder_factory =
-        kodo_new_shallow_encoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_disabled);
+        kodo_new_encoder_factory(code_type, finite_field, symbols, symbol_size);
 
     kodo_factory_t decoder_factory =
-        kodo_new_shallow_decoder_factory(code_type, finite_field,
-                                         symbols, symbol_size,
-                                         kodo_trace_enabled);
+        kodo_new_decoder_factory(code_type, finite_field, symbols, symbol_size);
 
     // If we wanted to build an encoder of decoder with a smaller number of
     // symbols or a different symbol size, then this can be adjusted using the
@@ -83,13 +79,13 @@ int main()
             input_symbols[i][j] = rand() % 256;
 
         // Store the symbol pointer in the encoder
-        kodo_set_symbol(encoder, i, input_symbols[i], symbol_size);
+        kodo_set_const_symbol(encoder, i, input_symbols[i], symbol_size);
 
         // Create the output symbol buffers for the decoder
         output_symbols[i] = (uint8_t*) malloc(symbol_size);
 
         // Specify the output buffers used for decoding
-        kodo_set_symbol(decoder, i, output_symbols[i], symbol_size);
+        kodo_set_mutable_symbol(decoder, i, output_symbols[i], symbol_size);
     }
 
     // Most of the network coding algorithms supports a mode of operation

@@ -13,22 +13,19 @@
 #include "test_coder.hpp"
 
 static void test_decoder(uint32_t symbols, uint32_t symbol_size,
-                         int32_t code_type, int32_t finite_field,
-                         int32_t trace)
+                         int32_t code_type, int32_t finite_field)
 {
-    kodo_factory_t decoder_factory =
-        kodo_new_decoder_factory(code_type, finite_field,
-                                 symbols, symbol_size,
-                                 trace);
+    kodo_factory_t decoder_factory = kodo_new_decoder_factory(code_type,
+        finite_field, symbols, symbol_size);
 
     kodo_coder_t decoder = kodo_factory_new_decoder(decoder_factory);
 
     // Coder methods
-    test_coder(decoder, symbols, symbol_size, code_type, trace);
+    test_coder(decoder, symbols, symbol_size, code_type);
 
     // Decoder methods
     // Seed-based codecs do not provide write_payload, i.e. recoding
-    if (code_type == kodo_seed || code_type == kodo_sparse_seed)
+    if (code_type == kodo_seed)
     {
         EXPECT_TRUE(kodo_has_write_payload(decoder) == 0);
     }
@@ -59,11 +56,5 @@ TEST(test_decoder, invoke_api)
     uint32_t symbols = rand_symbols();
     uint32_t symbol_size = rand_symbol_size();
 
-    test_combinations(
-        test_decoder,
-        symbols, symbol_size, kodo_trace_disabled);
-
-    test_combinations(
-        test_decoder,
-        symbols, symbol_size, kodo_trace_enabled);
+    test_combinations(test_decoder, symbols, symbol_size);
 }

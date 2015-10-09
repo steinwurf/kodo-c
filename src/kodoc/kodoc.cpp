@@ -166,7 +166,7 @@ void kodo_set_const_symbols(kodo_coder_t coder, uint8_t* data, uint32_t size)
 }
 
 void kodo_set_const_symbol(kodo_coder_t coder, uint32_t index, uint8_t* data,
-    uint32_t size)
+                           uint32_t size)
 {
     auto api = (kodo::api::final_interface*) coder;
     assert(api);
@@ -363,7 +363,7 @@ void kodo_set_pseudo_systematic(kodo_coder_t encoder, uint8_t pseudo_systematic)
 {
     auto api = (kodo::api::final_interface*) encoder;
     assert(api);
-    kodo::rlnc::api::set_pseudo_systematic(api, pseudo_systematic);
+    kodo::rlnc::api::set_pseudo_systematic(api, pseudo_systematic != 0);
 }
 
 uint8_t kodo_pre_charging(kodo_coder_t encoder)
@@ -377,7 +377,7 @@ void kodo_set_pre_charging(kodo_coder_t encoder, uint8_t pre_charging)
 {
     auto api = (kodo::api::final_interface*) encoder;
     assert(api);
-    kodo::rlnc::api::set_pre_charging(api, pre_charging);
+    kodo::rlnc::api::set_pre_charging(api, pre_charging != 0);
 }
 
 uint32_t kodo_width(kodo_coder_t encoder)
@@ -472,8 +472,8 @@ uint8_t kodo_has_set_trace_off(kodo_coder_t coder)
     return kodo::api::has_interface<kodo::api::trace_interface>(api);
 }
 
-void kodo_set_trace_callback(kodo_coder_t coder,
-    kodo_trace_callback_t c_callback, void* context)
+void kodo_set_trace_callback(
+    kodo_coder_t coder, kodo_trace_callback_t c_callback, void* context)
 {
     assert(c_callback);
     auto api = (kodo::api::final_interface*) coder;

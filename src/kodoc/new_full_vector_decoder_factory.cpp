@@ -8,18 +8,24 @@
 #include <cstdint>
 
 #include <kodo/api/api.hpp>
-#include <kodo/rlnc/full_vector_decoder.hpp>
 #include <kodo/runtime/default_decoder_binding.hpp>
 #include <kodo/runtime/default_decoder_factory_binding.hpp>
 #include <kodo/runtime/extend_binding.hpp>
+
+#include <kodo/rlnc/full_vector_decoder.hpp>
 
 #include "create_factory.hpp"
 
 namespace kodoc
 {
+    template<class Stack>
+    using extra_bindings =
+        kodo::api::write_payload_binding<
+        kodo::api::trace_binding<
+        kodo::api::mutable_storage_binding<Stack>>>;
+
     using full_vector_decoder_binding = kodo::runtime::extend_binding<
-        kodo::runtime::default_decoder_binding,
-        kodo::api::write_payload_binding>;
+        extra_bindings, kodo::runtime::default_decoder_binding>;
 
     kodo_factory_t new_full_vector_decoder_factory(int32_t finite_field,
         uint32_t max_symbols, uint32_t max_symbol_size)

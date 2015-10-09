@@ -38,7 +38,7 @@ extern "C" {
 typedef void (*kodo_trace_callback_t)(const char*, const char*, void*);
 
 //------------------------------------------------------------------
-// FACTORY API
+// KODO-C TYPES
 //------------------------------------------------------------------
 
 /// Opaque pointer used for the encoder and decoder factories
@@ -86,7 +86,6 @@ kodo_code_type;
 /// @param max_symbol_size The maximum symbol size in bytes supported by
 ///        encoders built using the returned factory
 /// @param trace_mode Determines which trace mode should be used.
-/// @param storage_mode @todo
 /// @return A new factory capable of building encoders using the
 ///         selected parameters.
 KODOC_API
@@ -102,7 +101,6 @@ kodo_factory_t kodo_new_encoder_factory(
 /// @param max_symbol_size The maximum symbol size in bytes supported by
 ///        decoders built using the returned factory
 /// @param trace_mode Determines which trace mode should be used.
-/// @param storage_mode @todo
 /// @return A new factory capable of building decoders using the
 ///         selected parameters.
 KODOC_API
@@ -162,8 +160,7 @@ void kodo_factory_set_symbols(kodo_factory_t factory, uint32_t symbols);
 /// @param symbol_size The symbol size used for the next encoder/decoder
 ///        built with the factory.
 KODOC_API
-void kodo_factory_set_symbol_size(kodo_factory_t factory,
-                                  uint32_t symbol_size);
+void kodo_factory_set_symbol_size(kodo_factory_t factory, uint32_t symbol_size);
 
 /// Builds a new encoder using the specified factory
 /// @param factory The encoder factory which should be used to
@@ -240,7 +237,7 @@ uint32_t kodo_block_size(kodo_coder_t coder);
 /// symbols also in the case of partial data. If this is not desired,
 /// then the symbols should be specified individually. This also
 /// means that it is the responsibility of the user to communicate
-/// how many of the bytes transmitted are application data.
+/// how many of the transmitted bytes are application data.
 /// @param encoder The encoder which will encode the data
 /// @param data The buffer containing the data to be encoded
 /// @param size The size of the buffer to be encoded
@@ -248,21 +245,31 @@ KODOC_API
 void kodo_set_const_symbols(kodo_coder_t encoder, uint8_t* data, uint32_t size);
 
 /// Specifies the source data for a given symbol.
-/// @param encoder The encoder which will encode the data
+/// @param encoder The encoder which will encode the symbol
 /// @param index The index of the symbol in the coding block
 /// @param data The buffer containing the data to be encoded
 /// @param size The size of the symbol buffer
 KODOC_API
 void kodo_set_const_symbol(kodo_coder_t encoder, uint32_t index, uint8_t* data,
-    uint32_t size);
+                           uint32_t size);
 
+/// Specifies the data buffer where the decoder should store the decoded
+/// symbols. This will specify the storage for all symbols.
+/// @param decoder The decoder which will decode the data
+/// @param data The buffer containing the data to be encoded
+/// @param size The size of the buffer to be encoded
 KODOC_API
 void kodo_set_mutable_symbols(kodo_coder_t encoder, uint8_t* data,
-    uint32_t size);
+                              uint32_t size);
 
+/// Specifies the data buffer where the decoder should store a given symbol.
+/// @param decoder The decoder which will decode the symbol
+/// @param index The index of the symbol in the coding block
+/// @param data The buffer containing the data to be encoded
+/// @param size The size of the symbol buffer
 KODOC_API
 void kodo_set_mutable_symbol(kodo_coder_t encoder, uint32_t index,
-    uint8_t* data, uint32_t size);
+                             uint8_t* data, uint32_t size);
 
 /// Copies the decoded symbols to the provided buffer.
 /// @param decoder The decoder which contains the data to be
@@ -566,7 +573,7 @@ void kodo_set_trace_stdout(kodo_coder_t coder);
 ///        state is needed the pointer can be set to NULL.
 KODOC_API
 void kodo_set_trace_callback(kodo_coder_t coder, kodo_trace_callback_t callback,
-    void* context);
+                             void* context);
 
 /// Disables the trace function of the encoder/decoder.
 /// @param coder The encoder/decoder to use

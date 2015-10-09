@@ -14,13 +14,13 @@
 
 template
 <
-    template <class,class,class...> class Coder,
+    template <class,class> class Coder,
     class Features,
-    template<class> class FactoryBinding,
-    template<class> class CoderBinding
+    template<class> class CoderBinding,
+    template<class> class FactoryBinding
 >
 kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
-    uint32_t max_symbol_size)
+                              uint32_t max_symbol_size)
 {
     using namespace kodo;
 
@@ -28,13 +28,13 @@ kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
 
     if (finite_field == kodo_binary)
     {
-        using result = typename Features::template append<kodo::enable_trace>;
-        using stack_type = Coder<fifi::binary, result>;
+        using features = typename Features::template append<kodo::enable_trace>;
+        using stack_type = Coder<fifi::binary, features>;
         using factory_type = typename stack_type::factory;
-        using binding_type =
-            api::build_binding<CoderBinding<stack_type>, FactoryBinding<factory_type>>;
+        using factory_binding = api::build_binding<
+            CoderBinding<stack_type>, FactoryBinding<factory_type>>;
 
-        auto binding = std::make_shared<binding_type>();
+        auto binding = std::make_shared<factory_binding>();
         binding->set_stack(std::make_shared<factory_type>(
             max_symbols, max_symbol_size));
 
@@ -42,13 +42,13 @@ kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
     }
     else if (finite_field == kodo_binary4)
     {
-        using result = typename Features::template append<kodo::enable_trace>;
-        using stack_type = Coder<fifi::binary4, result>;
+        using features = typename Features::template append<kodo::enable_trace>;
+        using stack_type = Coder<fifi::binary4, features>;
         using factory_type = typename stack_type::factory;
-        using binding_type =
-            api::build_binding<CoderBinding<stack_type>, FactoryBinding<factory_type>>;
+        using factory_binding = api::build_binding<
+            CoderBinding<stack_type>, FactoryBinding<factory_type>>;
 
-        auto binding = std::make_shared<binding_type>();
+        auto binding = std::make_shared<factory_binding>();
         binding->set_stack(std::make_shared<factory_type>(
             max_symbols, max_symbol_size));
 
@@ -56,20 +56,20 @@ kodo_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
     }
     else if (finite_field == kodo_binary8)
     {
-        using result = typename Features::template append<kodo::enable_trace>;
-        using stack_type = Coder<fifi::binary8, result>;
+        using features = typename Features::template append<kodo::enable_trace>;
+        using stack_type = Coder<fifi::binary8, features>;
         using factory_type = typename stack_type::factory;
-        using binding_type =
-            api::build_binding<CoderBinding<stack_type>, FactoryBinding<factory_type>>;
+        using factory_binding = api::build_binding<
+            CoderBinding<stack_type>, FactoryBinding<factory_type>>;
 
-        auto binding = std::make_shared<binding_type>();
+        auto binding = std::make_shared<factory_binding>();
         binding->set_stack(std::make_shared<factory_type>(
             max_symbols, max_symbol_size));
 
         factory = (kodo_factory_t)binding->keep_alive();
     }
 
-    assert(factory);
+    assert(factory && "Invalid finite field");
 
     return factory;
 }

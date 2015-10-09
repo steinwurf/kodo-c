@@ -10,21 +10,21 @@
 
 namespace kodoc
 {
-    // forward declare
-    // kodo_factory_t new_fulcrum_decoder_factory(int32_t, uint32_t,
-    //     uint32_t);
+    // Forward declaration of factory functions
     kodo_factory_t new_full_vector_decoder_factory(int32_t, uint32_t,
         uint32_t);
-    // kodo_factory_t new_on_the_fly_decoder_factory(int32_t, uint32_t,
-    //     uint32_t);
-    // kodo_factory_t new_perpetual_decoder_factory(int32_t, uint32_t,
+    kodo_factory_t new_on_the_fly_decoder_factory(int32_t, uint32_t,
+        uint32_t);
+    // kodo_factory_t new_sliding_window_decoder_factory(int32_t, uint32_t,
     //     uint32_t);
     // kodo_factory_t new_seed_decoder_factory(int32_t, uint32_t,
     //     uint32_t);
-    // kodo_factory_t new_sliding_window_decoder_factory(int32_t, uint32_t,
-    //     uint32_t);
     // kodo_factory_t new_sparse_seed_decoder_factory(int32_t, uint32_t,
     //     uint32_t);
+    // kodo_factory_t new_perpetual_decoder_factory(int32_t, uint32_t,
+    //     uint32_t);
+    kodo_factory_t new_fulcrum_decoder_factory(int32_t, uint32_t,
+        uint32_t);
 }
 
 kodo_factory_t kodo_new_decoder_factory(int32_t code_type, int32_t finite_field,
@@ -37,11 +37,11 @@ kodo_factory_t kodo_new_decoder_factory(int32_t code_type, int32_t finite_field,
         return new_full_vector_decoder_factory(
             finite_field, max_symbols, max_symbol_size);
     }
-    // else if (code_type == kodo_on_the_fly)
-    // {
-    //     return new_on_the_fly_decoder_factory(
-    //         finite_field, max_symbols, max_symbol_size);
-    // }
+    else if (code_type == kodo_on_the_fly)
+    {
+        return new_on_the_fly_decoder_factory(
+            finite_field, max_symbols, max_symbol_size);
+    }
     // else if (code_type == kodo_sliding_window)
     // {
     //     return new_sliding_window_decoder_factory(
@@ -62,15 +62,15 @@ kodo_factory_t kodo_new_decoder_factory(int32_t code_type, int32_t finite_field,
     //     return new_perpetual_decoder_factory(
     //         finite_field, max_symbols, max_symbol_size);
     // }
-    // else if (code_type == kodo_fulcrum)
-    // {
-    //     return new_fulcrum_decoder_factory(
-    //         finite_field, max_symbols, max_symbol_size);
-    // }
+    else if (code_type == kodo_fulcrum)
+    {
+        return new_fulcrum_decoder_factory(
+            finite_field, max_symbols, max_symbol_size);
+    }
     else
     {
         // unkown code type
-        assert(0);
+        assert(0 && "Unknown code_type");
         return 0;
     }
 }

@@ -101,7 +101,6 @@ int main()
         kodo_read_payload(decoder, payload);
     }
 
-
     if (memcmp(data_in, data_out, block_size) == 0)
     {
         printf("Data decoded correctly\n");

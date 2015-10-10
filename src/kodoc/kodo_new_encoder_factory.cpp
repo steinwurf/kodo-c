@@ -19,10 +19,10 @@ namespace kodoc
         uint32_t);
     kodo_factory_t new_sparse_full_vector_encoder_factory(int32_t, uint32_t,
         uint32_t);
-    // kodo_factory_t new_seed_encoder_factory(int32_t, uint32_t,
-    //     uint32_t);
-    // kodo_factory_t new_sparse_seed_encoder_factory(int32_t, uint32_t,
-    //     uint32_t);
+    kodo_factory_t new_seed_encoder_factory(int32_t, uint32_t,
+        uint32_t);
+    kodo_factory_t new_sparse_seed_encoder_factory(int32_t, uint32_t,
+        uint32_t);
     kodo_factory_t new_perpetual_encoder_factory(int32_t, uint32_t,
         uint32_t);
     kodo_factory_t new_fulcrum_encoder_factory(int32_t, uint32_t,
@@ -54,16 +54,16 @@ kodo_factory_t kodo_new_encoder_factory(int32_t code_type, int32_t finite_field,
         return new_sparse_full_vector_encoder_factory(
             finite_field, max_symbols, max_symbol_size);
     }
-    // else if (code_type == kodo_seed)
-    // {
-    //     return new_seed_encoder_factory(
-    //         finite_field, max_symbols, max_symbol_size);
-    // }
-    // else if (code_type == kodo_sparse_seed)
-    // {
-    //     return new_sparse_seed_encoder_factory(
-    //         finite_field, max_symbols, max_symbol_size);
-    // }
+    else if (code_type == kodo_seed)
+    {
+        return new_seed_encoder_factory(
+            finite_field, max_symbols, max_symbol_size);
+    }
+    else if (code_type == kodo_sparse_seed)
+    {
+        return new_sparse_seed_encoder_factory(
+            finite_field, max_symbols, max_symbol_size);
+    }
     else if (code_type == kodo_perpetual)
     {
         return new_perpetual_encoder_factory(

@@ -69,7 +69,8 @@ typedef enum
     kodo_sparse_full_vector,
     kodo_seed,
     kodo_sparse_seed,
-    kodo_perpetual
+    kodo_perpetual,
+    kodo_fulcrum
 }
 kodo_code_type;
 
@@ -77,7 +78,7 @@ kodo_code_type;
 // FACTORY API
 //------------------------------------------------------------------
 
-/// Builds a new encoder factory
+/// Builds a new encoder factory (for deep storage encoders)
 /// @param code_type This parameter determines the encoding algorithms used.
 /// @param finite_field The finite field that should be used by the encoder.
 /// @param max_symbols The maximum number of symbols supported by encoders
@@ -92,7 +93,7 @@ kodo_factory_t kodo_new_encoder_factory(
     int32_t code_type, int32_t finite_field,
     uint32_t max_symbols, uint32_t max_symbol_size);
 
-/// Builds a new decoder factory
+/// Builds a new decoder factory (for deep storage decoders)
 /// @param code_type This parameter determines the decoding algorithms used.
 /// @param finite_field The finite field that should be used by the decoder.
 /// @param max_symbols The maximum number of symbols supported by decoders
@@ -159,8 +160,7 @@ void kodo_factory_set_symbols(kodo_factory_t factory, uint32_t symbols);
 /// @param symbol_size The symbol size used for the next encoder/decoder
 ///        built with the factory.
 KODOC_API
-void kodo_factory_set_symbol_size(kodo_factory_t factory,
-                                  uint32_t symbol_size);
+void kodo_factory_set_symbol_size(kodo_factory_t factory, uint32_t symbol_size);
 
 /// Builds a new encoder using the specified factory
 /// @param factory The encoder factory which should be used to
@@ -259,7 +259,7 @@ void kodo_set_const_symbol(kodo_coder_t encoder, uint32_t index, uint8_t* data,
 /// @param data The buffer containing the data to be encoded
 /// @param size The size of the buffer to be encoded
 KODOC_API
-void kodo_set_mutable_symbols(kodo_coder_t decoder, uint8_t* data,
+void kodo_set_mutable_symbols(kodo_coder_t encoder, uint8_t* data,
                               uint32_t size);
 
 /// Specifies the data buffer where the decoder should store a given symbol.
@@ -268,8 +268,26 @@ void kodo_set_mutable_symbols(kodo_coder_t decoder, uint8_t* data,
 /// @param data The buffer containing the data to be encoded
 /// @param size The size of the symbol buffer
 KODOC_API
-void kodo_set_mutable_symbol(kodo_coder_t decoder, uint32_t index,
+void kodo_set_mutable_symbol(kodo_coder_t encoder, uint32_t index,
                              uint8_t* data, uint32_t size);
+
+/// Copies the decoded symbols to the provided buffer.
+/// @param decoder The decoder which contains the data to be
+///        copied.
+/// @param data The destination buffer to which the data should be copied
+/// @param size The size of the data to be copied
+KODOC_API
+void kodo_copy_from_symbols(kodo_coder_t decoder, uint8_t* data, uint32_t size);
+
+/// Copies a specific symbol to the provided buffer.
+/// @param decoder The decoder which contains the data to be
+///        copied.
+/// @param index The index of the symbol to copy
+/// @param data The destination buffer to which the data should be copied
+/// @param size The size of the data to be copied
+KODOC_API
+void kodo_copy_from_symbol(kodo_coder_t decoder, uint32_t index,
+                           uint8_t* data, uint32_t size);
 
 /// Returns the symbol size of an encoder/decoder.
 /// @param coder The encoder/decoder to check
@@ -555,7 +573,7 @@ void kodo_set_trace_stdout(kodo_coder_t coder);
 ///        state is needed the pointer can be set to NULL.
 KODOC_API
 void kodo_set_trace_callback(kodo_coder_t coder, kodo_trace_callback_t callback,
-    void* context);
+                             void* context);
 
 /// Disables the trace function of the encoder/decoder.
 /// @param coder The encoder/decoder to use

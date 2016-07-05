@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <sys/timeb.h>
 #include <assert.h>
 
 #ifdef _WIN32
@@ -56,8 +55,6 @@ int main(int argc, char* argv[])
     struct hostent* host;
 
     uint32_t delay = 0; // Delay between packets
-    struct timeb start_time;
-    struct timeb end_time;
 
     // Variables needed for the coding
     uint32_t max_symbols = 32;
@@ -184,7 +181,6 @@ int main(int argc, char* argv[])
         data_in[i] = rand() % 256;
 
     // Send data
-    ftime(&start_time);
     for (i = 0; i < packets; ++i)
     {
         if (kodoc_rank(encoder) < kodoc_symbols(encoder))
@@ -195,7 +191,8 @@ int main(int argc, char* argv[])
 
             // Calculate the offset to the next symbol to insert
             uint8_t* symbol = data_in + (rank * kodoc_symbol_size(encoder));
-            kodoc_set_const_symbol(encoder, rank, symbol, kodoc_symbol_size(encoder));
+            kodoc_set_const_symbol(
+                encoder, rank, symbol, kodoc_symbol_size(encoder));
         }
 
         bytes_used = kodoc_write_payload(encoder, payload);
@@ -215,13 +212,6 @@ int main(int argc, char* argv[])
 
         sleep_here(delay);
     }
-
-    ftime(&end_time);
-
-    int32_t delta = (end_time.time * 1000 + end_time.millitm) -
-                    (start_time.time * 1000 + start_time.millitm);
-
-    printf("Time needed: %d ms\n", delta);
 
     // Clean up
     free(data_in);

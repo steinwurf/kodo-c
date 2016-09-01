@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+9.0.0-lts.0
+-----------
+* LTS: Version created on 2016.09.01. End of support: 2018.03.01.
+
 9.0.0
 -----
 * Major: Upgrade to kodo-core 4

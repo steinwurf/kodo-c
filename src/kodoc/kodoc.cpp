@@ -10,6 +10,7 @@
 #include <cassert>
 #include <string>
 
+#include <storage/storage.hpp>
 #include <kodo_core/api/api.hpp>
 
 #if !defined(KODOC_DISABLE_RLNC)
@@ -226,7 +227,7 @@ void kodoc_set_const_symbols(kodoc_coder_t coder, uint8_t* data, uint32_t size)
 {
     auto api = (final_interface*) coder;
     assert(api);
-    set_const_symbols(api, sak::storage(data, size));
+    set_const_symbols(api, storage::storage(data, size));
 }
 
 void kodoc_set_const_symbol(
@@ -234,7 +235,7 @@ void kodoc_set_const_symbol(
 {
     auto api = (final_interface*) coder;
     assert(api);
-    set_const_symbol(api, index, sak::storage(data, size));
+    set_const_symbol(api, index, storage::storage(data, size));
 }
 
 void kodoc_set_mutable_symbols(
@@ -242,7 +243,7 @@ void kodoc_set_mutable_symbols(
 {
     auto api = (final_interface*) coder;
     assert(api);
-    set_mutable_symbols(api, sak::storage(data, size));
+    set_mutable_symbols(api, storage::storage(data, size));
 }
 
 void kodoc_set_mutable_symbol(
@@ -250,7 +251,7 @@ void kodoc_set_mutable_symbol(
 {
     auto api = (final_interface*) coder;
     assert(api);
-    set_mutable_symbol(api, index, sak::storage(data, size));
+    set_mutable_symbol(api, index, storage::storage(data, size));
 }
 
 uint32_t kodoc_symbol_size(kodoc_coder_t coder)

@@ -31,24 +31,24 @@ def resolve(ctx):
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-core',
         git_repository='github.com/steinwurf/kodo-core.git',
-        major=2))
+        major=4))
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-rlnc',
         git_repository='github.com/steinwurf/kodo-rlnc.git',
-        major=2),
+        major=4),
         optional=True)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-fulcrum',
         git_repository='github.com/steinwurf/kodo-fulcrum.git',
-        major=2),
+        major=4),
         optional=True)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-reed-solomon',
         git_repository='github.com/steinwurf/kodo-reed-solomon.git',
-        major=2),
+        major=4),
         optional=True)
 
     # Internal dependencies

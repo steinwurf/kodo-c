@@ -29,26 +29,90 @@ def resolve(ctx):
         major=3))
 
     ctx.add_dependency(resolve.ResolveVersion(
+        name='boost',
+        git_repository='github.com/steinwurf/boost.git',
+        major=2, minor=1, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='cpuid',
+        git_repository='github.com/steinwurf/cpuid.git',
+        major=4, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='endian',
+        git_repository='github.com/steinwurf/endian.git',
+        major=3, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='fifi',
+        git_repository='github.com/steinwurf/fifi.git',
+        major=24, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='hex',
+        git_repository='github.com/steinwurf/hex.git',
+        major=3, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='meta',
+        git_repository='github.com/steinwurf/meta.git',
+        major=2, minor=1, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='platform',
+        git_repository='github.com/steinwurf/platform.git',
+        major=2, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='recycle',
+        git_repository='github.com/steinwurf/recycle.git',
+        major=2, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='sak',
+        git_repository='github.com/steinwurf/sak.git',
+        major=15, minor=0, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
+        name='storage',
+        git_repository='github.com/steinwurf/storage.git',
+        major=2, minor=1, patch=0),
+        recursive_resolve=False)
+
+    ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-core',
         git_repository='github.com/steinwurf/kodo-core.git',
-        major=4))
+        major=4, minor=0, patch=1),
+        recursive_resolve=False)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-rlnc',
         git_repository='github.com/steinwurf/kodo-rlnc.git',
-        major=4),
+        major=4, minor=0, patch=0),
+        recursive_resolve=False,
         optional=True)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-fulcrum',
         git_repository='github.com/steinwurf/kodo-fulcrum.git',
-        major=4),
+        major=4, minor=0, patch=0),
+        recursive_resolve=False,
         optional=True)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-reed-solomon',
         git_repository='github.com/steinwurf/kodo-reed-solomon.git',
-        major=4),
+        major=4, minor=0, patch=0),
+        recursive_resolve=False,
         optional=True)
 
     # Internal dependencies
@@ -57,7 +121,8 @@ def resolve(ctx):
         ctx.add_dependency(resolve.ResolveVersion(
             name='gtest',
             git_repository='github.com/steinwurf/gtest.git',
-            major=3))
+            major=3, minor=0, patch=0),
+            recursive_resolve=False)
 
     opts = ctx.opt.add_option_group('kodo-c options')
 

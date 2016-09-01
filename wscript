@@ -5,7 +5,7 @@ import os
 import waflib.extras.wurf_options
 
 APPNAME = 'kodoc'
-VERSION = '8.0.1'
+VERSION = '9.0.0'
 
 codecs = ['full_vector', 'on_the_fly', 'sliding_window',
           'sparse_full_vector', 'seed', 'sparse_seed',

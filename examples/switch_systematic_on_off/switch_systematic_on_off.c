@@ -37,11 +37,11 @@ int main()
     // The factories are used to build actual encoders/decoder
     kodoc_factory_t encoder_factory =
         kodoc_new_encoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     kodoc_factory_t decoder_factory =
         kodoc_new_decoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     // If we wanted to build an encoder or decoder with a smaller number of
     // symbols or a different symbol size, then this can be adjusted using the

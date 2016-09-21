@@ -35,11 +35,11 @@ int main()
     // Some common choices are: kodoc_binary, kodoc_binary4, kodoc_binary8
     int32_t finite_field = kodoc_binary8;
 
-    kodoc_factory_t encoder_factory = kodoc_new_encoder_factory(codec,
-        finite_field, max_symbols, max_symbol_size);
+    kodoc_factory_t encoder_factory = kodoc_new_encoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
-    kodoc_factory_t decoder_factory = kodoc_new_decoder_factory(codec,
-        finite_field, max_symbols, max_symbol_size);
+    kodoc_factory_t decoder_factory = kodoc_new_decoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
     kodoc_coder_t encoder = kodoc_factory_build_coder(encoder_factory);
     kodoc_coder_t decoder = kodoc_factory_build_coder(decoder_factory);
@@ -79,7 +79,7 @@ int main()
             // Calculate the offset to the next symbol to insert
             uint8_t* symbol = data_in + (rank * kodoc_symbol_size(encoder));
             kodoc_set_const_symbol(encoder, rank, symbol,
-                kodoc_symbol_size(encoder));
+                                   kodoc_symbol_size(encoder));
         }
 
         bytes_used = kodoc_write_payload(encoder, payload);

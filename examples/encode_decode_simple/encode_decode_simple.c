@@ -46,13 +46,11 @@ int main()
 
     // First, we create an encoder & decoder factory.
     // The factories are used to build actual encoders/decoders
-    kodoc_factory_t encoder_factory =
-        kodoc_new_encoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+    kodoc_factory_t encoder_factory = kodoc_new_encoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
-    kodoc_factory_t decoder_factory =
-        kodoc_new_decoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+    kodoc_factory_t decoder_factory = kodoc_new_decoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
     // If we wanted to build an encoder or decoder with a smaller number of
     // symbols or a different symbol size, then this can be adjusted using the
@@ -73,7 +71,7 @@ int main()
     uint8_t* data_out = (uint8_t*) malloc(block_size);
 
     uint32_t i = 0;
-    for(; i < block_size; ++i)
+    for (; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
     kodoc_set_const_symbols(encoder, data_in, block_size);

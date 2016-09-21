@@ -19,24 +19,24 @@
 
 namespace kodoc
 {
-    kodoc_factory_t new_seed_encoder_factory(int32_t finite_field,
-        uint32_t max_symbols, uint32_t max_symbol_size)
-    {
-        return create_factory<
-            runtime_encoder<
-            kodo_rlnc::seed_encoder,
-            kodo_core::api::systematic_binding>>(
-                finite_field, max_symbols, max_symbol_size);
-    }
+kodoc_factory_t new_seed_encoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
+{
+    return create_factory<
+           runtime_encoder<
+           kodo_rlnc::seed_encoder,
+           kodo_core::api::systematic_binding>>(
+               finite_field, max_symbols, max_symbol_size);
+}
 
-    kodoc_factory_t new_seed_decoder_factory(int32_t finite_field,
-        uint32_t max_symbols, uint32_t max_symbol_size)
-    {
-        return create_factory<
-            runtime_decoder<
-            kodo_rlnc::seed_decoder>>(
-                finite_field, max_symbols, max_symbol_size);
-    }
+kodoc_factory_t new_seed_decoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
+{
+    return create_factory<
+           runtime_decoder<
+           kodo_rlnc::seed_decoder>>(
+               finite_field, max_symbols, max_symbol_size);
+}
 }
 
 #endif

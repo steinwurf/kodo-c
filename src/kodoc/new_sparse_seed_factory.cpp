@@ -18,29 +18,29 @@
 
 namespace kodoc
 {
-    template<class Stack>
-    using sparse_seed_encoder_binding =
-        kodo_core::api::sparse_encoder_binding<
-        kodo_core::api::systematic_binding<Stack>>;
+template<class Stack>
+using sparse_seed_encoder_binding =
+    kodo_core::api::sparse_encoder_binding<
+    kodo_core::api::systematic_binding<Stack>>;
 
-    kodoc_factory_t new_sparse_seed_encoder_factory(int32_t finite_field,
-        uint32_t max_symbols, uint32_t max_symbol_size)
-    {
-        return create_factory<
-            runtime_encoder<
-            kodo_rlnc::sparse_seed_encoder,
-            sparse_seed_encoder_binding>>(
-                finite_field, max_symbols, max_symbol_size);
-    }
+kodoc_factory_t new_sparse_seed_encoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
+{
+    return create_factory<
+           runtime_encoder<
+           kodo_rlnc::sparse_seed_encoder,
+           sparse_seed_encoder_binding>>(
+               finite_field, max_symbols, max_symbol_size);
+}
 
-    kodoc_factory_t new_sparse_seed_decoder_factory(int32_t finite_field,
-        uint32_t max_symbols, uint32_t max_symbol_size)
-    {
-        return create_factory<
-            runtime_decoder<
-            kodo_rlnc::sparse_seed_decoder>>(
-                finite_field, max_symbols, max_symbol_size);
-    }
+kodoc_factory_t new_sparse_seed_decoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
+{
+    return create_factory<
+           runtime_decoder<
+           kodo_rlnc::sparse_seed_decoder>>(
+               finite_field, max_symbols, max_symbol_size);
+}
 }
 
 #endif

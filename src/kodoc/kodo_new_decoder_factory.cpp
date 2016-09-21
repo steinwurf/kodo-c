@@ -10,17 +10,15 @@
 
 namespace kodoc
 {
-    // Forward declaration of factory functions
-    kodoc_factory_t new_fulcrum_decoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_full_vector_decoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_on_the_fly_decoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_perpetual_decoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_seed_decoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_sliding_window_decoder_factory(int32_t, uint32_t,
-        uint32_t);
-    kodoc_factory_t new_sparse_seed_decoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_reed_solomon_decoder_factory(int32_t, uint32_t,
-        uint32_t);
+// Forward declaration of factory functions
+kodoc_factory_t new_fulcrum_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_full_vector_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_on_the_fly_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_perpetual_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_seed_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_sliding_window_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_sparse_seed_decoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_reed_solomon_decoder_factory(int32_t, uint32_t, uint32_t);
 }
 
 kodoc_factory_t kodoc_new_decoder_factory(

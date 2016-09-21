@@ -10,19 +10,17 @@
 
 namespace kodoc
 {
-    // Forward declaration of factory functions
-    kodoc_factory_t new_fulcrum_encoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_full_vector_encoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_on_the_fly_encoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_perpetual_encoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_seed_encoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_sliding_window_encoder_factory(int32_t, uint32_t,
-        uint32_t);
-    kodoc_factory_t new_sparse_full_vector_encoder_factory(int32_t, uint32_t,
-        uint32_t);
-    kodoc_factory_t new_sparse_seed_encoder_factory(int32_t, uint32_t, uint32_t);
-    kodoc_factory_t new_reed_solomon_encoder_factory(int32_t, uint32_t,
-        uint32_t);
+// Forward declaration of factory functions
+kodoc_factory_t new_fulcrum_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_full_vector_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_on_the_fly_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_perpetual_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_seed_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_sliding_window_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_sparse_full_vector_encoder_factory(int32_t, uint32_t,
+                                                       uint32_t);
+kodoc_factory_t new_sparse_seed_encoder_factory(int32_t, uint32_t, uint32_t);
+kodoc_factory_t new_reed_solomon_encoder_factory(int32_t, uint32_t, uint32_t);
 }
 
 kodoc_factory_t kodoc_new_encoder_factory(

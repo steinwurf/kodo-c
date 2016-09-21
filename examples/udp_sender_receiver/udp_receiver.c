@@ -125,8 +125,8 @@ int main(int argc, char* argv[])
     }
 
     // Create the encoder factory
-    decoder_factory = kodoc_new_decoder_factory(codec, finite_field,
-                                               max_symbols, max_symbol_size);
+    decoder_factory = kodoc_new_decoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
     kodoc_factory_set_symbols(decoder_factory, symbols);
     decoder = kodoc_factory_build_coder(decoder_factory);

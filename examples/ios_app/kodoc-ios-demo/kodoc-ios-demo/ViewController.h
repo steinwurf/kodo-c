@@ -10,8 +10,8 @@
 
 @interface ViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIButton *start_button;
-@property (strong, nonatomic) IBOutlet UILabel *info_label;
+    @property(strong, nonatomic) IBOutlet UIButton* start_button;
+@property(strong, nonatomic) IBOutlet UILabel* info_label;
 @property int counter;
 
 @end

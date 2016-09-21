@@ -130,19 +130,19 @@ inline void test_basic_api(int32_t encoder_type, int32_t decoder_type,
     {
         SCOPED_TRACE(testing::Message() << "field = binary");
         run_test_basic_api(encoder_type, decoder_type, kodoc_binary, symbols,
-            symbol_size);
+                           symbol_size);
     }
 
     {
         SCOPED_TRACE(testing::Message() << "field = binary4");
         run_test_basic_api(encoder_type, decoder_type, kodoc_binary4, symbols,
-            symbol_size);
+                           symbol_size);
     }
 
     {
         SCOPED_TRACE(testing::Message() << "field = binary8");
         run_test_basic_api(encoder_type, decoder_type, kodoc_binary8, symbols,
-            symbol_size);
+                           symbol_size);
     }
 }
 

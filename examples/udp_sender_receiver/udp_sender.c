@@ -26,19 +26,19 @@
 
 #ifdef _WIN32
 
-    #include <windows.h>
+#include <windows.h>
 
-    void sleep_here(uint32_t milliseconds)
-    {
-        Sleep(milliseconds);
-    }
+void sleep_here(uint32_t milliseconds)
+{
+    Sleep(milliseconds);
+}
 
 #else
 
-    void sleep_here(uint32_t milliseconds)
-    {
-        usleep(milliseconds * 1000); // takes microseconds
-    }
+void sleep_here(uint32_t milliseconds)
+{
+    usleep(milliseconds * 1000); // takes microseconds
+}
 
 #endif
 
@@ -149,7 +149,7 @@ int main(int argc, char* argv[])
 
     // Create the encoder factory
     encoder_factory = kodoc_new_encoder_factory(codec, finite_field,
-                                               max_symbols, max_symbol_size);
+                                                max_symbols, max_symbol_size);
 
     // Initialize the factory with the chosen symbols and symbol size
     symbols = atoi(argv[3]);
@@ -200,8 +200,8 @@ int main(int argc, char* argv[])
                kodoc_rank(encoder), bytes_used);
 
         return_code = sendto(socket_descriptor, payload, bytes_used, 0,
-                    (struct sockaddr*) &remote_address,
-                    sizeof(remote_address));
+                             (struct sockaddr*) &remote_address,
+                             sizeof(remote_address));
 
         if (return_code < 0)
         {

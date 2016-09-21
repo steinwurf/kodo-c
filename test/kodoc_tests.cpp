@@ -12,9 +12,9 @@
 
 // The main function should not be defined on Windows Phone
 #if defined(PLATFORM_WINDOWS_PHONE)
-int invoke_gtest(int argc, char** argv)
+    int invoke_gtest(int argc, char** argv)
 #else
-GTEST_API_ int main(int argc, char** argv)
+    GTEST_API_ int main(int argc, char** argv)
 #endif
 {
     srand(static_cast<uint32_t>(time(0)));

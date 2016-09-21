@@ -48,17 +48,15 @@ int main()
 
     // First, we create an encoder & decoder factory.
     // The factories are used to build actual encoders/decoders
-    kodoc_factory_t encoder_factory =
-        kodoc_new_encoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+    kodoc_factory_t encoder_factory = kodoc_new_encoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
     // We query the maximum number of expansion symbols for the fulcrum factory
     printf("Max expansion of the encoder factory: %d\n",
            kodoc_factory_max_expansion(encoder_factory));
 
-    kodoc_factory_t decoder_factory =
-        kodoc_new_decoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+    kodoc_factory_t decoder_factory = kodoc_new_decoder_factory(
+        codec, finite_field, max_symbols, max_symbol_size);
 
     // We query the maximum number of expansion symbols for the fulcrum factory
     printf("Max expansion of the decoder factory: %d\n",
@@ -92,7 +90,7 @@ int main()
 
     // Fill the input buffer with random data
     uint32_t i = 0;
-    for(; i < block_size; ++i)
+    for (; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
     // Assign the data buffers to the encoder and decoder

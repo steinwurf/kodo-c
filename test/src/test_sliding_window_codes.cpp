@@ -89,7 +89,7 @@ void test_sliding_window(uint32_t max_symbols, uint32_t max_symbol_size,
     uint8_t* data_out = (uint8_t*) malloc(block_size);
 
     // Just for fun - fill the data with random data
-    for(uint32_t i = 0; i < block_size; ++i)
+    for (uint32_t i = 0; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
     // Install a custom trace function for the encoder and decoder

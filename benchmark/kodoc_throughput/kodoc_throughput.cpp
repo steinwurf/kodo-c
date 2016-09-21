@@ -97,7 +97,7 @@ results run_coding_test(int32_t finite_field, uint32_t symbols,
     }
 
     // Randomize input data
-    for(i = 0; i < block_size; ++i)
+    for (i = 0; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
     // Set the input and output symbol buffers

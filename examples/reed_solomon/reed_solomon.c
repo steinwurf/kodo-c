@@ -46,11 +46,11 @@ int main()
 
     kodoc_factory_t encoder_factory =
         kodoc_new_encoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     kodoc_factory_t decoder_factory =
         kodoc_new_decoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     kodoc_coder_t encoder = kodoc_factory_build_coder(encoder_factory);
     kodoc_coder_t decoder = kodoc_factory_build_coder(decoder_factory);
@@ -68,7 +68,7 @@ int main()
 
     // Fill the input buffer with random data
     uint32_t i = 0;
-    for(; i < block_size; ++i)
+    for (; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
     // Assign the data buffers to the encoder and decoder

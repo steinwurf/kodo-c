@@ -6,7 +6,8 @@
 #include "com_steinwurf_dummy_android_MainActivity.h"
 
 JNIEXPORT
-jboolean JNICALL Java_com_steinwurf_dummy_1android_MainActivity_runKodo(JNIEnv* env, jobject thiz)
+jboolean JNICALL Java_com_steinwurf_dummy_1android_MainActivity_runKodo(
+    JNIEnv* env, jobject thiz)
 {
     // Seed random number generator to produce different results every time
     srand(time(NULL));
@@ -25,11 +26,11 @@ jboolean JNICALL Java_com_steinwurf_dummy_1android_MainActivity_runKodo(JNIEnv* 
     // Create the factories
     kodoc_factory_t encoder_factory =
         kodoc_new_encoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     kodoc_factory_t decoder_factory =
         kodoc_new_decoder_factory(code_type, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     // Create the coders
     kodoc_coder_t encoder = kodoc_factory_build_coder(encoder_factory);
@@ -43,7 +44,7 @@ jboolean JNICALL Java_com_steinwurf_dummy_1android_MainActivity_runKodo(JNIEnv* 
     uint8_t* data_in = (uint8_t*) malloc(block_size);
 
     uint32_t i = 0;
-    for(; i < block_size; ++i)
+    for (; i < block_size; ++i)
         data_in[i] = rand() % 256;
 
     // Set the date to encode

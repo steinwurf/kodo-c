@@ -37,13 +37,13 @@ void test_read_write_uncoded(uint32_t symbols, uint32_t symbol_size,
     EXPECT_EQ(symbols * symbol_size, kodoc_block_size(decoder));
 
     EXPECT_TRUE(kodoc_factory_max_payload_size(encoder_factory) >=
-        kodoc_payload_size(encoder));
+                kodoc_payload_size(encoder));
 
     EXPECT_TRUE(kodoc_factory_max_payload_size(decoder_factory) >=
-        kodoc_payload_size(decoder));
+                kodoc_payload_size(decoder));
 
     EXPECT_EQ(kodoc_factory_max_payload_size(encoder_factory),
-        kodoc_factory_max_payload_size(decoder_factory));
+              kodoc_factory_max_payload_size(decoder_factory));
 
     uint32_t payload_size = kodoc_payload_size(encoder);
     uint8_t* payload = (uint8_t*) malloc(payload_size);
@@ -139,8 +139,8 @@ TEST(test_read_write_uncoded_symbol, uncoded_symbols)
     uint32_t symbol_size = rand_symbol_size();
 
     test_read_write_uncoded(symbols, symbol_size,
-        kodoc_full_vector, kodoc_binary);
+                            kodoc_full_vector, kodoc_binary);
 
     test_read_write_uncoded(symbols, symbol_size,
-        kodoc_full_vector, kodoc_binary8);
+                            kodoc_full_vector, kodoc_binary8);
 }

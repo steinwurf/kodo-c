@@ -9,9 +9,9 @@
 
 namespace kodoc
 {
-    template<class Factory>
-    using factory_binding =
-        kodo_core::api::storage_block_info_binding<
-        kodo_core::api::max_payload_size_binding<
-        kodo_core::api::final_binding<Factory>>>;
+template<class Factory>
+using factory_binding =
+    kodo_core::api::storage_block_info_binding<
+    kodo_core::api::max_payload_size_binding<
+    kodo_core::api::final_binding<Factory>>>;
 }

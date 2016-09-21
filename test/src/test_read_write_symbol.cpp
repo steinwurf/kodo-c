@@ -37,13 +37,13 @@ void test_read_write_symbol(uint32_t symbols, uint32_t symbol_size,
     EXPECT_EQ(symbols * symbol_size, kodoc_block_size(decoder));
 
     EXPECT_TRUE(kodoc_factory_max_payload_size(encoder_factory) >=
-        kodoc_payload_size(encoder));
+                kodoc_payload_size(encoder));
 
     EXPECT_TRUE(kodoc_factory_max_payload_size(decoder_factory) >=
-        kodoc_payload_size(decoder));
+                kodoc_payload_size(decoder));
 
     EXPECT_EQ(kodoc_factory_max_payload_size(encoder_factory),
-        kodoc_factory_max_payload_size(decoder_factory));
+              kodoc_factory_max_payload_size(decoder_factory));
 
     uint8_t* coded_symbol = (uint8_t*) malloc(symbol_size);
 

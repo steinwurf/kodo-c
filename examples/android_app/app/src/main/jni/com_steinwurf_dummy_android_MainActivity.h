@@ -12,8 +12,9 @@ extern "C" {
  * Method:    runKodo
  * Signature: ()Z
  */
-JNIEXPORT jboolean JNICALL Java_com_steinwurf_dummy_1android_MainActivity_runKodo
-  (JNIEnv *, jobject);
+JNIEXPORT jboolean JNICALL
+Java_com_steinwurf_dummy_1android_MainActivity_runKodo
+(JNIEnv*, jobject);
 
 #ifdef __cplusplus
 }

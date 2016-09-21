@@ -14,24 +14,24 @@
 #include <kodo_core/api/api.hpp>
 
 #if !defined(KODOC_DISABLE_RLNC)
-#include <kodo_rlnc/api/pre_charging.hpp>
-#include <kodo_rlnc/api/pseudo_systematic.hpp>
-#include <kodo_rlnc/api/set_pre_charging.hpp>
-#include <kodo_rlnc/api/set_pseudo_systematic.hpp>
-#include <kodo_rlnc/api/set_width.hpp>
-#include <kodo_rlnc/api/set_width_ratio.hpp>
-#include <kodo_rlnc/api/width.hpp>
-#include <kodo_rlnc/api/width_ratio.hpp>
+    #include <kodo_rlnc/api/pre_charging.hpp>
+    #include <kodo_rlnc/api/pseudo_systematic.hpp>
+    #include <kodo_rlnc/api/set_pre_charging.hpp>
+    #include <kodo_rlnc/api/set_pseudo_systematic.hpp>
+    #include <kodo_rlnc/api/set_width.hpp>
+    #include <kodo_rlnc/api/set_width_ratio.hpp>
+    #include <kodo_rlnc/api/width.hpp>
+    #include <kodo_rlnc/api/width_ratio.hpp>
 #endif // !defined(KODOC_DISABLE_RLNC)
 
 #if !defined(KODOC_DISABLE_FULCRUM)
-#include <kodo_fulcrum/api/expansion.hpp>
-#include <kodo_fulcrum/api/max_expansion.hpp>
-#include <kodo_fulcrum/api/set_expansion.hpp>
-#include <kodo_fulcrum/api/inner_symbols.hpp>
-#include <kodo_fulcrum/api/max_inner_symbols.hpp>
-#include <kodo_fulcrum/api/nested_symbols.hpp>
-#include <kodo_fulcrum/api/nested_symbol_size.hpp>
+    #include <kodo_fulcrum/api/expansion.hpp>
+    #include <kodo_fulcrum/api/max_expansion.hpp>
+    #include <kodo_fulcrum/api/set_expansion.hpp>
+    #include <kodo_fulcrum/api/inner_symbols.hpp>
+    #include <kodo_fulcrum/api/max_inner_symbols.hpp>
+    #include <kodo_fulcrum/api/nested_symbols.hpp>
+    #include <kodo_fulcrum/api/nested_symbol_size.hpp>
 #endif // !defined(KODOC_DISABLE_FULCRUM)
 
 struct kodoc_factory { };
@@ -371,7 +371,7 @@ uint32_t kodoc_symbols_uncoded(kodoc_coder_t decoder)
 }
 
 void kodoc_read_symbol(kodoc_coder_t decoder, uint8_t* symbol_data,
-                      uint8_t* coefficients)
+                       uint8_t* coefficients)
 {
     auto api = (final_interface*) decoder;
     assert(api);

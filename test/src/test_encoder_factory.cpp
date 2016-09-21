@@ -16,7 +16,7 @@ static void test_encoder_factory(uint32_t max_symbols, uint32_t max_symbol_size,
 {
     kodoc_factory_t encoder_factory =
         kodoc_new_encoder_factory(codec, finite_field,
-                                 max_symbols, max_symbol_size);
+                                  max_symbols, max_symbol_size);
 
     // Test the max_* properties
     EXPECT_EQ(max_symbols, kodoc_factory_max_symbols(encoder_factory));

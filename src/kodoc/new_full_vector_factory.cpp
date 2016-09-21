@@ -22,8 +22,8 @@
 
 namespace kodoc
 {
-kodoc_factory_t new_full_vector_encoder_factory(int32_t finite_field,
-                                                uint32_t max_symbols, uint32_t max_symbol_size)
+kodoc_factory_t new_full_vector_encoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
 {
     return create_factory<
            runtime_encoder<
@@ -37,8 +37,8 @@ using sparse_full_vector_encoder_binding =
     kodo_core::api::sparse_encoder_binding<
     kodo_core::api::systematic_binding<Stack>>;
 
-kodoc_factory_t new_sparse_full_vector_encoder_factory(int32_t finite_field,
-                                                       uint32_t max_symbols, uint32_t max_symbol_size)
+kodoc_factory_t new_sparse_full_vector_encoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
 {
     return create_factory<
            runtime_encoder<
@@ -47,8 +47,8 @@ kodoc_factory_t new_sparse_full_vector_encoder_factory(int32_t finite_field,
                finite_field, max_symbols, max_symbol_size);
 }
 
-kodoc_factory_t new_full_vector_decoder_factory(int32_t finite_field,
-                                                uint32_t max_symbols, uint32_t max_symbol_size)
+kodoc_factory_t new_full_vector_decoder_factory(
+    int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
 {
     return create_factory<
            runtime_decoder<

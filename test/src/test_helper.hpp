@@ -47,17 +47,17 @@ inline void test_combinations(
     SCOPED_TRACE(testing::Message() << "symbol_size = " << max_symbol_size);
 
     std::vector<int32_t> codecs =
-    {
-        kodoc_full_vector,
-        kodoc_on_the_fly,
-        kodoc_sliding_window,
-        kodoc_sparse_full_vector,
-        kodoc_seed,
-        kodoc_sparse_seed,
-        kodoc_perpetual,
-        kodoc_fulcrum,
-        kodoc_reed_solomon
-    };
+        {
+            kodoc_full_vector,
+            kodoc_on_the_fly,
+            kodoc_sliding_window,
+            kodoc_sparse_full_vector,
+            kodoc_seed,
+            kodoc_sparse_seed,
+            kodoc_perpetual,
+            kodoc_fulcrum,
+            kodoc_reed_solomon
+        };
 
     for (auto& codec : codecs)
     {

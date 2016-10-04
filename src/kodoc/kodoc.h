@@ -393,6 +393,37 @@ uint32_t kodoc_symbols_partially_decoded(kodoc_coder_t decoder);
 KODOC_API
 uint32_t kodoc_symbols_uncoded(kodoc_coder_t decoder);
 
+/// Returns whether an decoder implements the
+/// symbol_decoding_status_updater_interface
+/// @param encoder The decoder
+/// @return Non-zero if the decoder implements the
+///         symbol_decoding_status_updater_interface, otherwise 0
+KODOC_API
+uint8_t kodoc_has_symbol_decoding_status_updater_interface(
+    kodoc_coder_t decoder);
+
+/// Sets the status updater on.
+/// @param decoder The decoder to modify
+KODOC_API
+void kodoc_set_status_updater_on(kodoc_coder_t decoder);
+
+/// Sets the status updater off.
+/// @param decoder The decoder to modify
+KODOC_API
+void kodoc_set_status_updater_off(kodoc_coder_t decoder);
+
+/// Updates the symbol status so that all uncoded symbols, label partially
+/// decoded, will labelled as uncoded.
+/// @param decoder The decoder to update
+KODOC_API
+void kodoc_update_symbol_status(kodoc_coder_t decoder);
+
+/// Returns whether the symbol status updater is enabled or not.
+/// @param decoder The decoder to query
+/// @return Non-zero value if the symbol status updater is enabled, otherwise 0
+KODOC_API
+uint8_t kodoc_is_status_updater_enabled(kodoc_coder_t decoder);
+
 /// Reads and decodes an encoded symbol according to the provided coding
 /// coefficients.
 /// @param decoder The decoder to use.

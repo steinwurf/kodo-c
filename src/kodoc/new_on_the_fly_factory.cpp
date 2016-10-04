@@ -32,7 +32,8 @@ kodoc_factory_t new_on_the_fly_encoder_factory(
 template<class Stack>
 using on_the_fly_decoder_binding =
     kodo_core::api::partial_decoding_binding<
-    kodo_core::api::write_payload_binding<Stack>>;
+    kodo_core::api::symbol_decoding_status_updater_binding<
+    kodo_core::api::write_payload_binding<Stack>>>;
 
 kodoc_factory_t new_on_the_fly_decoder_factory(
     int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)

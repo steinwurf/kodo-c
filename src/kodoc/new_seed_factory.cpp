@@ -34,7 +34,8 @@ kodoc_factory_t new_seed_decoder_factory(
 {
     return create_factory<
            runtime_decoder<
-           kodo_rlnc::seed_decoder>>(
+           kodo_rlnc::seed_decoder,
+           kodo_core::api::symbol_decoding_status_updater_binding>>(
                finite_field, max_symbols, max_symbol_size);
 }
 }

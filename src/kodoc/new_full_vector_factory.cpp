@@ -47,13 +47,18 @@ kodoc_factory_t new_sparse_full_vector_encoder_factory(
                finite_field, max_symbols, max_symbol_size);
 }
 
+template<class Stack>
+using full_vector_decoder_binding =
+    kodo_core::api::write_payload_binding<
+    kodo_core::api::symbol_decoding_status_updater_binding<Stack>>;
+
 kodoc_factory_t new_full_vector_decoder_factory(
     int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
 {
     return create_factory<
            runtime_decoder<
            kodo_rlnc::full_vector_decoder,
-           kodo_core::api::write_payload_binding>>(
+           full_vector_decoder_binding>>(
                finite_field, max_symbols, max_symbol_size);
 }
 }

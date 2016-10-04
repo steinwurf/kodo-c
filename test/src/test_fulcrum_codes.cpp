@@ -5,8 +5,6 @@
 
 #include <kodoc/kodoc.h>
 
-#include <functional>
-
 #include <gtest/gtest.h>
 
 #include "test_helper.hpp"

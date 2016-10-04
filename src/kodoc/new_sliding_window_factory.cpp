@@ -38,9 +38,10 @@ kodoc_factory_t new_sliding_window_encoder_factory(
 template<class Stack>
 using sliding_window_decoder_binding =
     kodo_core::api::write_feedback_binding<
+    kodo_core::api::symbol_decoding_status_updater_binding<
     kodo_core::api::feedback_size_binding<
     kodo_core::api::partial_decoding_binding<
-    kodo_core::api::write_payload_binding<Stack>>>>;
+    kodo_core::api::write_payload_binding<Stack>>>>>;
 
 kodoc_factory_t new_sliding_window_decoder_factory(
     int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)

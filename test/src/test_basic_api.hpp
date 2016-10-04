@@ -84,6 +84,22 @@ inline void run_test_basic_api(int32_t encoder_type, int32_t decoder_type,
         kodoc_set_mutable_symbol(decoder, i, output_symbols[i], symbol_size);
     }
 
+    if (kodoc_has_symbol_decoding_status_updater_interface(decoder))
+    {
+        EXPECT_FALSE(kodoc_is_status_updater_enabled(decoder));
+        kodoc_set_status_updater_on(decoder);
+        EXPECT_TRUE(kodoc_is_status_updater_enabled(decoder));
+        kodoc_set_status_updater_off(decoder);
+        EXPECT_FALSE(kodoc_is_status_updater_enabled(decoder));
+    }
+    else
+    {
+        EXPECT_TRUE(
+            decoder_type == kodoc_fulcrum ||
+            decoder_type == kodoc_reed_solomon
+        );
+    }
+
     EXPECT_TRUE(kodoc_is_complete(decoder) == 0);
 
     while (!kodoc_is_complete(decoder))

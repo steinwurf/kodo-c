@@ -22,7 +22,7 @@ TEST(test_on_the_fly_codes, basic_api)
 }
 
 void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,
-    int32_t finite_field)
+                     int32_t finite_field)
 {
     kodoc_factory_t encoder_factory = kodoc_new_encoder_factory(
         kodoc_on_the_fly, finite_field, max_symbols, max_symbol_size);

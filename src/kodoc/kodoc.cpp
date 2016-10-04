@@ -268,6 +268,13 @@ uint32_t kodoc_symbols(kodoc_coder_t coder)
     return symbols(api);
 }
 
+uint32_t kodoc_coefficient_vector_size(kodoc_coder_t coder)
+{
+    auto api = (final_interface*) coder;
+    assert(api);
+    return coefficient_vector_size(api);
+}
+
 //------------------------------------------------------------------
 // CODEC API
 //------------------------------------------------------------------

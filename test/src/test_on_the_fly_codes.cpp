@@ -9,6 +9,7 @@
 
 #include "test_helper.hpp"
 #include "test_basic_api.hpp"
+#include "test_decoder_symbol_status_api.hpp"
 
 TEST(test_on_the_fly_codes, basic_api)
 {
@@ -19,6 +20,14 @@ TEST(test_on_the_fly_codes, basic_api)
     uint32_t max_symbol_size = rand_symbol_size();
 
     test_basic_api(kodoc_on_the_fly, max_symbols, max_symbol_size);
+}
+
+TEST(test_on_the_fly_codes, decoder_symbol_status_api)
+{
+    if (kodoc_has_codec(kodoc_on_the_fly) == false)
+        return;
+
+    test_decoder_symbol_status_api(kodoc_on_the_fly);
 }
 
 void test_on_the_fly(uint32_t max_symbols, uint32_t max_symbol_size,

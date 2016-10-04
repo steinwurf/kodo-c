@@ -280,6 +280,12 @@ uint32_t kodoc_symbol_size(kodoc_coder_t coder);
 KODOC_API
 uint32_t kodoc_symbols(kodoc_coder_t coder);
 
+/// Returns the size of coefficient vector.
+/// @param coder The encoder/decoder to check
+/// @return The size of coefficient vector
+KODOC_API
+uint32_t kodoc_coefficient_vector_size(kodoc_coder_t coder);
+
 //------------------------------------------------------------------
 // CODEC API
 //------------------------------------------------------------------

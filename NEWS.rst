@@ -6,6 +6,10 @@ of every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+10.0.0
+------
 * Major: Upgrade to kodo-core 6
 * Major: Upgrade to kodo-rlnc 5
 * Major: Upgrade to kodo-fulcrum 5

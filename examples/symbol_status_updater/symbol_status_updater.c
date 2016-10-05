@@ -49,7 +49,7 @@ int main()
 
     kodoc_coder_t encoder = kodoc_factory_build_coder(encoder_factory);
     // create two decoders, one which has the status updater turned on, and one
-    // which has it on.
+    // which has it off.
     kodoc_coder_t decoder1 = kodoc_factory_build_coder(decoder_factory);
     kodoc_coder_t decoder2 = kodoc_factory_build_coder(decoder_factory);
 

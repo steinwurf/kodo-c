@@ -268,6 +268,13 @@ uint32_t kodoc_symbols(kodoc_coder_t coder)
     return symbols(api);
 }
 
+uint32_t kodoc_coefficient_vector_size(kodoc_coder_t coder)
+{
+    auto api = (final_interface*) coder;
+    assert(api);
+    return coefficient_vector_size(api);
+}
+
 //------------------------------------------------------------------
 // CODEC API
 //------------------------------------------------------------------
@@ -370,6 +377,34 @@ uint32_t kodoc_symbols_uncoded(kodoc_coder_t decoder)
     return symbols_uncoded(api);
 }
 
+void kodoc_set_status_updater_on(kodoc_coder_t decoder)
+{
+    auto api = (final_interface*) decoder;
+    assert(api);
+    set_status_updater_on(api);
+}
+
+void kodoc_set_status_updater_off(kodoc_coder_t decoder)
+{
+    auto api = (final_interface*) decoder;
+    assert(api);
+    set_status_updater_off(api);
+}
+
+void kodoc_update_symbol_status(kodoc_coder_t decoder)
+{
+    auto api = (final_interface*) decoder;
+    assert(api);
+    update_symbol_status(api);
+}
+
+uint8_t kodoc_is_status_updater_enabled(kodoc_coder_t decoder)
+{
+    auto api = (final_interface*) decoder;
+    assert(api);
+    return is_status_updater_enabled(api);
+}
+
 void kodoc_read_symbol(kodoc_coder_t decoder, uint8_t* symbol_data,
                        uint8_t* coefficients)
 {
@@ -405,6 +440,14 @@ uint32_t kodoc_write_uncoded_symbol(
 //------------------------------------------------------------------
 // GENERIC API
 //------------------------------------------------------------------
+
+uint8_t kodoc_has_symbol_decoding_status_updater_interface(
+    kodoc_coder_t decoder)
+{
+    auto api = (final_interface*) decoder;
+    assert(api);
+    return has_interface<symbol_decoding_status_updater_interface>(api);
+}
 
 uint8_t kodoc_has_partial_decoding_interface(kodoc_coder_t decoder)
 {

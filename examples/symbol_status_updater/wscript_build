@@ -1,0 +1,13 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+search_path = []
+
+if not bld.is_mkspec_platform('windows'):
+    search_path = ['.']
+
+bld.program(features='c',
+            source='symbol_status_updater.c',
+            target='../../symbol_status_updater',
+            rpath=search_path,
+            use=['kodoc'])

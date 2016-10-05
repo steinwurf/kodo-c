@@ -30,13 +30,18 @@ kodoc_factory_t new_perpetual_encoder_factory(
                finite_field, max_symbols, max_symbol_size);
 }
 
+template<class Stack>
+using perpetual_decoder_binding =
+    kodo_core::api::write_payload_binding<
+    kodo_core::api::symbol_decoding_status_updater_binding<Stack>>;
+
 kodoc_factory_t new_perpetual_decoder_factory(
     int32_t finite_field, uint32_t max_symbols, uint32_t max_symbol_size)
 {
     return create_factory<
            runtime_decoder<
            kodo_rlnc::perpetual_decoder,
-           kodo_core::api::write_payload_binding>>(
+           perpetual_decoder_binding>>(
                finite_field, max_symbols, max_symbol_size);
 }
 }

@@ -31,24 +31,24 @@ def resolve(ctx):
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-core',
         git_repository='github.com/steinwurf/kodo-core.git',
-        major=4))
+        major=6))
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-rlnc',
         git_repository='github.com/steinwurf/kodo-rlnc.git',
-        major=4),
+        major=5),
         optional=True)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-fulcrum',
         git_repository='github.com/steinwurf/kodo-fulcrum.git',
-        major=4),
+        major=5),
         optional=True)
 
     ctx.add_dependency(resolve.ResolveVersion(
         name='kodo-reed-solomon',
         git_repository='github.com/steinwurf/kodo-reed-solomon.git',
-        major=4),
+        major=5),
         optional=True)
 
     # Internal dependencies
@@ -181,6 +181,7 @@ def build(bld):
         bld.recurse('examples/sliding_window')
         bld.recurse('examples/sparse_seed')
         bld.recurse('examples/switch_systematic_on_off')
+        bld.recurse('examples/symbol_status_updater')
         bld.recurse('examples/udp_sender_receiver')
         bld.recurse('examples/uncoded_symbols')
         bld.recurse('examples/use_trace_layers')

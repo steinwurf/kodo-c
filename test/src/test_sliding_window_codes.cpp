@@ -5,11 +5,30 @@
 
 #include <kodoc/kodoc.h>
 
-#include <cstdlib>
-
 #include <gtest/gtest.h>
 
 #include "test_helper.hpp"
+#include "test_basic_api.hpp"
+#include "test_decoder_symbol_status_api.hpp"
+
+TEST(test_sliding_window_codes, basic_api)
+{
+    if (kodoc_has_codec(kodoc_sliding_window) == false)
+        return;
+
+    uint32_t max_symbols = rand_symbols();
+    uint32_t max_symbol_size = rand_symbol_size();
+
+    test_basic_api(kodoc_sliding_window, max_symbols, max_symbol_size);
+}
+
+TEST(test_sliding_window_codes, decoder_symbol_status_api)
+{
+    if (kodoc_has_codec(kodoc_sliding_window) == false)
+        return;
+
+    test_decoder_symbol_status_api(kodoc_sliding_window);
+}
 
 static uint32_t encoder_trace_called = 0;
 static uint32_t decoder_trace_called = 0;
@@ -35,13 +54,13 @@ static void decoder_trace_callback(const char* zone, const char* data,
 }
 
 void test_sliding_window(uint32_t max_symbols, uint32_t max_symbol_size,
-                         int32_t codec, int32_t finite_field)
+                         int32_t finite_field)
 {
     kodoc_factory_t encoder_factory = kodoc_new_encoder_factory(
-        codec, finite_field, max_symbols, max_symbol_size);
+        kodoc_sliding_window, finite_field, max_symbols, max_symbol_size);
 
     kodoc_factory_t decoder_factory = kodoc_new_decoder_factory(
-        codec, finite_field, max_symbols, max_symbol_size);
+        kodoc_sliding_window, finite_field, max_symbols, max_symbol_size);
 
     kodoc_coder_t encoder = kodoc_factory_build_coder(encoder_factory);
     kodoc_coder_t decoder = kodoc_factory_build_coder(decoder_factory);
@@ -147,12 +166,9 @@ TEST(test_sliding_window_codes, invoke_api)
     uint32_t max_symbols = rand_symbols();
     uint32_t max_symbol_size = rand_symbol_size();
 
-    test_sliding_window(max_symbols, max_symbol_size,
-                        kodoc_sliding_window, kodoc_binary);
+    test_sliding_window(max_symbols, max_symbol_size, kodoc_binary);
 
-    test_sliding_window(max_symbols, max_symbol_size,
-                        kodoc_sliding_window, kodoc_binary4);
+    test_sliding_window(max_symbols, max_symbol_size, kodoc_binary4);
 
-    test_sliding_window(max_symbols, max_symbol_size,
-                        kodoc_sliding_window, kodoc_binary8);
+    test_sliding_window(max_symbols, max_symbol_size, kodoc_binary8);
 }

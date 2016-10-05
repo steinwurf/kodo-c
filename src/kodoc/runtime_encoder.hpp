@@ -24,7 +24,8 @@ using encoder_binding =
     kodo_core::api::rank_binding<
     kodo_core::api::write_payload_binding<
     kodo_core::api::payload_size_binding<
-    kodo_core::api::final_binding<Stack>>>>>>;
+    kodo_core::api::coefficient_vector_size_binding<
+    kodo_core::api::final_binding<Stack>>>>>>>;
 
 template
 <

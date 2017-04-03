@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 import os
-import waflib.extras.wurf_options
 
 APPNAME = 'kodoc'
 VERSION = '10.0.0'
@@ -14,52 +13,7 @@ codecs = ['full_vector', 'on_the_fly', 'sliding_window',
 
 def options(opt):
 
-    opt.load('wurf_common_tools')
-
-
-def resolve(ctx):
-
-    import waflib.extras.wurf_dependency_resolve as resolve
-
-    ctx.load('wurf_common_tools')
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='waf-tools',
-        git_repository='github.com/steinwurf/waf-tools.git',
-        major=3))
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='kodo-core',
-        git_repository='github.com/steinwurf/kodo-core.git',
-        major=6))
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='kodo-rlnc',
-        git_repository='github.com/steinwurf/kodo-rlnc.git',
-        major=5),
-        optional=True)
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='kodo-fulcrum',
-        git_repository='github.com/steinwurf/kodo-fulcrum.git',
-        major=5),
-        optional=True)
-
-    ctx.add_dependency(resolve.ResolveVersion(
-        name='kodo-reed-solomon',
-        git_repository='github.com/steinwurf/kodo-reed-solomon.git',
-        major=5),
-        optional=True)
-
-    # Internal dependencies
-    if ctx.is_toplevel():
-
-        ctx.add_dependency(resolve.ResolveVersion(
-            name='gtest',
-            git_repository='github.com/steinwurf/gtest.git',
-            major=3))
-
-    opts = ctx.opt.add_option_group('kodo-c options')
+    opts = opt.add_option_group('kodo-c options')
 
     opts.add_option(
         '--disable_rlnc', default=None, dest='disable_rlnc',
@@ -80,8 +34,6 @@ def resolve(ctx):
 
 
 def configure(conf):
-
-    conf.load("wurf_common_tools")
 
     conf.env['DEFINES_KODOC_COMMON'] = []
 
@@ -134,8 +86,6 @@ def build(bld):
         bld.env.append_value('CXXFLAGS', '-fvisibility=hidden')
         bld.env.append_value('CXXFLAGS', '-fvisibility-inlines-hidden')
         bld.env.append_value('LINKFLAGS', '-fvisibility=hidden')
-
-    bld.load("wurf_common_tools")
 
     bld.env.append_unique(
         'DEFINES_STEINWURF_VERSION',

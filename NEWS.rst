@@ -8,6 +8,15 @@ Latest
 ------
 * tbd
 
+11.0.0
+------
+* Major: Upgrade to waf-tools 4
+* Major: Upgrade to kodo-core 8
+* Major: Upgrade to kodo-rlnc 6
+* Major: Upgrade to kodo-fulcrum 6
+* Major: Upgrade to kodo-reed-solomon 7
+* Minor: Upgrade to gtest 4
+
 10.0.0
 ------
 * Major: Upgrade to kodo-core 6

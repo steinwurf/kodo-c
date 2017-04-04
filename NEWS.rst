@@ -8,6 +8,10 @@ Latest
 ------
 * tbd
 
+11.0.1
+------
+* Patch: Fixed the installation of kodoc.h
+
 11.0.0
 ------
 * Major: Upgrade to waf-tools 4

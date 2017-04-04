@@ -143,5 +143,5 @@ def build(bld):
             install_path = os.path.abspath(os.path.expanduser(install_path))
             start_dir = bld.path.find_dir('src')
             bld.install_files(os.path.join(install_path, 'include'),
-                              ['kodoc/kodoc.h'],
+                              start_dir.ant_glob('**/*.h'),
                               cwd=start_dir, relative_trick=True)

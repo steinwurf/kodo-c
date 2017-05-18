@@ -8,6 +8,13 @@ Latest
 ------
 * tbd
 
+12.0.0
+------
+* Major: Upgrade to kodo-core 9
+* Major: Upgrade to kodo-rlnc 7
+* Major: Upgrade to kodo-fulcrum 7
+* Major: Upgrade to kodo-reed-solomon 8
+
 11.0.1
 ------
 * Patch: Fixed the installation of kodoc.h

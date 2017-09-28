@@ -8,6 +8,6 @@ if not bld.is_mkspec_platform('windows'):
 
 bld.program(features='c',
             source='uncoded_symbols.c',
-            target='../../uncoded_symbols',
+            target='uncoded_symbols',
             rpath=search_path,
             use=['kodoc'])

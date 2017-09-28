@@ -8,6 +8,6 @@ if not bld.is_mkspec_platform('windows'):
 
 bld.program(features='c',
             source='encode_decode_on_the_fly.c',
-            target='../../encode_decode_on_the_fly',
+            target='encode_decode_on_the_fly',
             rpath=search_path,
             use=['kodoc'])

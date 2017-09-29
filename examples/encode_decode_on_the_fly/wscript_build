@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-bld.program(features='c',
+bld.program(features='cxx',
             source='encode_decode_on_the_fly.c',
             target='encode_decode_on_the_fly',
             use=['kodoc_static'])

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-bld.program(features='c',
+bld.program(features='cxx',
             source='use_trace_layers.c',
             target='use_trace_layers',
             use=['kodoc_static'])

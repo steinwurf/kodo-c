@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-bld.program(features='c',
+bld.program(features='cxx',
             source='perpetual.c',
             target='perpetual',
             use=['kodoc_static'])

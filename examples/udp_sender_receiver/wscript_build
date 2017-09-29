@@ -6,13 +6,13 @@ static_libs = []
 if bld.is_mkspec_platform('windows'):
     static_libs = ['Ws2_32']
 
-bld.program(features='c',
+bld.program(features='cxx',
             source='udp_sender.c',
             target='udp_sender',
             lib=static_libs,
             use=['kodoc_static'])
 
-bld.program(features='c',
+bld.program(features='cxx',
             source='udp_receiver.c',
             target='udp_receiver',
             lib=static_libs,

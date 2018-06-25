@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-bld.program(features='cxx',
+bld.program(features='cxx limit_includes',
             source='uncoded_symbols.c',
             target='uncoded_symbols',
             use=['kodoc_static'])

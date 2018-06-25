@@ -9,7 +9,7 @@ if not bld.is_mkspec_platform('windows'):
 
 # First, we test with the kodo-c static library (to make debugging easier)
 bld.program(
-    features='cxx test',
+    features='cxx test limit_includes',
     source=['kodoc_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
     target='kodoc_static_tests',
     use=['kodoc_static', 'gtest'])
@@ -19,7 +19,7 @@ bld.program(
 if bld.get_mkspec_platform() not in ['android', 'ios']:
 
     bld.program(
-        features='cxx test',
+        features='cxx test limit_includes',
         source=['kodoc_tests.cpp'] + bld.path.ant_glob('src/*.cpp'),
         target='kodoc_tests',
         rpath=search_path,

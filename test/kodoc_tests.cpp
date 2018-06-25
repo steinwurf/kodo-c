@@ -7,15 +7,9 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <platform/config.hpp>
 #include <gtest/gtest.h>
 
-// The main function should not be defined on Windows Phone
-#if defined(PLATFORM_WINDOWS_PHONE)
-    int invoke_gtest(int argc, char** argv)
-#else
-    GTEST_API_ int main(int argc, char** argv)
-#endif
+GTEST_API_ int main(int argc, char** argv)
 {
     srand(static_cast<uint32_t>(time(0)));
 

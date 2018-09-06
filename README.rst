@@ -16,6 +16,16 @@ If you try to configure without a valid license, then you will get an error!
 About
 -----
 
+**Warning!**: The kodo-c library is now deprecated and it will not receive
+any updates in the future. Please consider using the following repositories
+for future development:
+
+  - https://github.com/steinwurf/kodo-rlnc-c
+  - https://github.com/steinwurf/kodo-rlnc
+  - https://github.com/steinwurf/kodo-reed-solomon
+  - https://github.com/steinwurf/kodo-fulcrum
+  - https://github.com/steinwurf/kodo-perpetual
+
 This repository contains high-level C bindings for the Kodo erasure coding
 library. The bindings provide access to the basic functionality provided by
 Kodo, such as encoding and decoding data. The examples folder provides

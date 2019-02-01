@@ -171,4 +171,6 @@ TEST(test_sliding_window_codes, invoke_api)
     test_sliding_window(max_symbols, max_symbol_size, kodoc_binary4);
 
     test_sliding_window(max_symbols, max_symbol_size, kodoc_binary8);
+
+    test_sliding_window(max_symbols, max_symbol_size, kodoc_binary16);
 }

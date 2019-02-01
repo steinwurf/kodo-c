@@ -54,7 +54,8 @@ typedef enum
 {
     kodoc_binary,
     kodoc_binary4,
-    kodoc_binary8
+    kodoc_binary8,
+    kodoc_binary16
 }
 kodoc_finite_field;
 

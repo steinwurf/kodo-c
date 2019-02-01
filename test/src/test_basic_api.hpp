@@ -160,6 +160,12 @@ inline void test_basic_api(int32_t encoder_type, int32_t decoder_type,
         run_test_basic_api(encoder_type, decoder_type, kodoc_binary8, symbols,
                            symbol_size);
     }
+
+    {
+        SCOPED_TRACE(testing::Message() << "field = binary16");
+        run_test_basic_api(encoder_type, decoder_type, kodoc_binary16, symbols,
+                           symbol_size);
+    }
 }
 
 inline void test_basic_api(int32_t coder_type, uint32_t symbols,

@@ -19,7 +19,8 @@ kodoc_factory_t create_factory(int32_t finite_field, uint32_t max_symbols,
         {
             {kodoc_binary, "binary"},
             {kodoc_binary4, "binary4"},
-            {kodoc_binary8, "binary8"}
+            {kodoc_binary8, "binary8"},
+            {kodoc_binary16, "binary16"}
         };
 
     auto r = Runtime();

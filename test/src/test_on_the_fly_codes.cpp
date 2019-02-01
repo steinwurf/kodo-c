@@ -143,4 +143,6 @@ TEST(test_on_the_fly_codes, invoke_api)
     test_on_the_fly(max_symbols, max_symbol_size, kodoc_binary4);
 
     test_on_the_fly(max_symbols, max_symbol_size, kodoc_binary8);
+
+    test_on_the_fly(max_symbols, max_symbol_size, kodoc_binary16);
 }

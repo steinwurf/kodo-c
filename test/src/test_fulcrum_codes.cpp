@@ -18,7 +18,8 @@ TEST(test_fulcrum_codes, basic_api)
     uint32_t max_symbols = rand_symbols();
     uint32_t max_symbol_size = rand_symbol_size();
 
-    test_basic_api(kodoc_fulcrum, max_symbols, max_symbol_size);
+    run_test_basic_api(kodoc_fulcrum, kodoc_fulcrum, kodoc_binary8,
+                       max_symbols, max_symbol_size);
 }
 
 static void test_fulcrum_api(kodoc_factory_t fulcrum_factory)
